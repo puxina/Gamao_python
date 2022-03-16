@@ -1,3 +1,4 @@
+from pickle import FALSE, TRUE
 import random
 import os
 
@@ -5,28 +6,25 @@ import os
 random.seed(os.urandom(1))
 
 # Variáveis que determina a cores das peças
-PC_CLARA = '\u001b[33;1m●\u001b[0m'  # Círculo amarelo
-PC_ESCURA = '\u001b[32;1m●\u001b[0m' # Círculo verde
-PC_NULA = '\u001b[37;1m◌\u001b[0m'   # Círculo pontilhado branco
-CS_CLARA = '\u001b[34;1m|\u001b[0m'  # Barra azul
-CS_ESCURA = '\u001b[31;1m|\u001b[0m' # Barra vermelha
-CS_MEIO = '\u001b[37;1m|\u001b[0m'   # Barra branca
-
-# Variável para movimento de uma peça, com casa e linha
-peca = [1, 1]
+PC_CLARA = '\u001b[37;1m●\u001b[0m'      # Círculo branco
+PC_ESCURA = '\u001b[38;5;202m●\u001b[0m' # Círculo laranja
+PC_NULA = '\u001b[37;1m◌\u001b[0m'       # Círculo pontilhado branco
+CS_CLARA = '\u001b[34;1m|\u001b[0m'      # Barra azul
+CS_ESCURA = '\u001b[31;1m|\u001b[0m'     # Barra vermelha
+CS_MEIO = '\u001b[37;1m|\u001b[0m'       # Barra branca
 
 # Matriz com os elementos peças distribuídas no tabuleiro
-pecas_posi = [[PC_CLARA, PC_CLARA, PC_NULA, PC_NULA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],
+pecas_posi = [[PC_CLARA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],
               [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],   [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_ESCURA, PC_ESCURA, PC_ESCURA, PC_ESCURA, PC_ESCURA],
               [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],   [PC_ESCURA, PC_ESCURA, PC_ESCURA, PC_NULA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],
-              [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],   [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_CLARA, PC_CLARA, PC_CLARA, PC_CLARA, PC_CLARA],
-              [PC_ESCURA, PC_ESCURA, PC_ESCURA, PC_ESCURA, PC_ESCURA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],
+              [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],   [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_CLARA, PC_CLARA, PC_CLARA, PC_CLARA, PC_NULA],
+              [PC_ESCURA, PC_ESCURA, PC_ESCURA, PC_ESCURA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],
               [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_CLARA, PC_CLARA, PC_CLARA, PC_NULA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],
-              [PC_CLARA, PC_CLARA, PC_CLARA, PC_CLARA, PC_CLARA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],
-              [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_ESCURA, PC_ESCURA, PC_NULA, PC_NULA, PC_NULA]]
+              [PC_CLARA, PC_CLARA, PC_CLARA, PC_CLARA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_CLARA, PC_NULA, PC_NULA, PC_NULA, PC_NULA],
+              [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA], [PC_ESCURA, PC_NULA, PC_NULA, PC_NULA, PC_NULA]]
 
-pecas_capturadas_claras = [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA]
-pecas_capturadas_escuras = [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA]
+pecas_capturadas_claras = [PC_CLARA, PC_CLARA, PC_NULA, PC_NULA, PC_NULA]
+pecas_capturadas_escuras = [PC_ESCURA, PC_ESCURA, PC_NULA, PC_NULA, PC_NULA]
 
 pecas_retiradas_claras = [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA,
                           PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA,
@@ -36,12 +34,12 @@ pecas_retiradas_escuras = [PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA,
                            PC_NULA, PC_NULA, PC_NULA, PC_NULA, PC_NULA]
 
 # Variáveis dos valores de dados
-Dado_1 = 1
-Dado_2 = 1
+dado_1 = 1
+dado_2 = 1
 
 # Variáveis jogador da vez
-Jog_1 = True
-Jog_2 = False
+jog_1 = True
+jog_2 = False
 
 ################################################################################################
 ################################################################################################
@@ -108,7 +106,7 @@ def Print_Tabuleiro():
 
 def Rola_Dado():
     """Função que retorna, para o respectivo jogador, os valores de dados lançados para a jogada"""
-    if Jog_1:
+    if jog_1:
         print(Jogador_1 + ", aperte enter para rolar os dados:", end = '')
         input()
     else:
@@ -120,9 +118,9 @@ def Rola_Dado():
 ################################################################################################
 ################################################################################################
 
-def Opcoes(D1, D2):
+def Opcoes(d1, d2):
     """Função para indicar as várias opções disponíveis do uso dos dados ao jogador"""
-    if D1 == D2:
+    if d1 == d2:
         while True:
             try:
                 print("\nSelecione uma das opções de jogadas disponíveis abaixo:\n")
@@ -136,7 +134,7 @@ def Opcoes(D1, D2):
                 else:
                     return opcao
             except ValueError:
-                print("\u001b[41mValor inválido.\u001b[0m Repita a operação.")
+                print("\u001b[41mOpção inválida.\u001b[0m Repita a operação.")
     else:
         while True:
             try:
@@ -150,7 +148,167 @@ def Opcoes(D1, D2):
                 else:
                     return opcao
             except ValueError:
-                print("\u001b[41mValor inválido.\u001b[0m Repita a operação.")
+                print("\u001b[41mOpção inválida.\u001b[0m Repita a operação.")
+
+################################################################################################
+################################################################################################
+
+def Peca_Capturada(d1, d2):
+    """Função para determinar se há peças capturadas dos jogadores e quais valores valores de dados usará para
+       o retorno da peça ao tabuleiro"""
+
+    global jog_1, jog_2
+    # Jogador 1
+    if jog_1:
+        # Contagem de quantas peças claras foram capturadas
+        pecas_capturadas = 0
+        for cont in range(5):
+            if pecas_capturadas_claras[cont] == PC_CLARA:
+                pecas_capturadas += 1
+
+        # Teste das condições 
+        if pecas_capturadas == 0:
+            return False
+        else:
+            casas_bahia = []
+            d1_valido = False
+            d2_valido = False
+            for cont in range(6):
+                if pecas_posi[cont][0] == PC_NULA:
+                    casas_bahia.append(True)
+                    if d1 == (cont+1):
+                        d1_valido = True
+                    if d2 == (cont+1):
+                        d2_valido = True
+                else:
+                    casas_bahia.append(False)
+            
+            if d1_valido and d2_valido:
+                print("\n\u001b[4mOs valores de Dado 1 e Dado 2 permitem retornar a peça capturada ao tabuleiro\u001b[0m")
+                while True:
+                    try:
+                        dado_x = int(input("Escolha qual Dado você deseja (1 ou 2): "))
+                        if dado_x < 1 or dado_x > 2:
+                            raise ValueError
+                        else:
+                            break
+                    except ValueError:
+                        print("\u001b[41mValor inválido.\u001b[0m Repita a operação.")
+                if dado_x == 1:
+                    pecas_posi[d1-1][0], pecas_capturadas_claras[pecas_capturadas-1] = pecas_capturadas_claras[pecas_capturadas-1], pecas_posi[d1-1][0]
+                else:
+                    pecas_posi[d2-1][0], pecas_capturadas_claras[pecas_capturadas-1] = pecas_capturadas_claras[pecas_capturadas-1], pecas_posi[d2-1][0]
+                pecas_capturadas -= 1
+                Print_Tabuleiro()
+                if pecas_capturadas == 0:
+                    return False
+                else:
+                    Peca_Capturada(d1, d2)
+            elif d1_valido:
+                print("\n\u001b[4mO valor do Dado 1 permite retornar a peça capturada ao tabuleiro\u001b[0m\n" +
+                      "Pressione enter para realizar a jogada: ")
+                input()
+                pecas_posi[d1-1][0], pecas_capturadas_claras[pecas_capturadas-1] = pecas_capturadas_claras[pecas_capturadas-1], pecas_posi[d1-1][0]
+                pecas_capturadas -= 1
+                Print_Tabuleiro()
+                if pecas_capturadas == 0:
+                    return False
+                else:
+                    Peca_Capturada(d1, d2)
+            elif d2_valido:
+                print("\n\u001b[4mO valor do Dado 2 permite retornar a peça capturada ao tabuleiro\u001b[0m\n" +
+                      "Pressione enter para realizar a jogada: ")
+                input()
+                pecas_posi[d2-1][0], pecas_capturadas_claras[pecas_capturadas-1] = pecas_capturadas_claras[pecas_capturadas-1], pecas_posi[d2-1][0]
+                pecas_capturadas -= 1
+                Print_Tabuleiro()
+                if pecas_capturadas == 0:
+                    return False
+                else:
+                    Peca_Capturada(d1, d2)
+            else:
+                print("\n\u001b[4mNenhum dos dois valores permite retornar a peça capturada ao tabuleiro\u001b[0m\n" +
+                      "Passe a jogada =( \n")
+                jog_1 = False
+                jog_2 = True
+                Print_Tabuleiro()
+                return False
+
+    if jog_2:
+        # Contagem de quantas peças escuras foram capturadas
+        pecas_capturadas = 0
+        for cont in range(5):
+            if pecas_capturadas_escuras[cont] == PC_ESCURA:
+                pecas_capturadas += 1
+
+        # Teste das condições 
+        if pecas_capturadas == 0:
+            return False
+        else:
+            casas_bahia = []
+            d1_valido = False
+            d2_valido = False
+            for cont in range(6):
+                if pecas_posi[23-cont][0] == PC_NULA:
+                    casas_bahia.append(True)
+                    if d1 == (cont+1):
+                        d1_valido = True
+                    if d2 == (cont+1):
+                        d2_valido = True
+                else:
+                    casas_bahia.append(False)
+            
+            if d1_valido and d2_valido:
+                print("\n\u001b[4mOs valores de Dado 1 e Dado 2 permitem retornar a peça capturada ao tabuleiro\u001b[0m")
+                while True:
+                    try:
+                        dado_x = int(input("Escolha qual Dado você deseja (1 ou 2): "))
+                        if dado_x < 1 or dado_x > 2:
+                            raise ValueError
+                        else:
+                            break
+                    except ValueError:
+                        print("\u001b[41mValor inválido.\u001b[0m Repita a operação.")
+                if dado_x == 1:
+                    pecas_posi[24-d1][0], pecas_capturadas_escuras[pecas_capturadas-1] = pecas_capturadas_escuras[pecas_capturadas-1], pecas_posi[24-d1][0]
+                else:
+                    pecas_posi[24-d2][0], pecas_capturadas_escuras[pecas_capturadas-1] = pecas_capturadas_escuras[pecas_capturadas-1], pecas_posi[24-d2][0]
+                pecas_capturadas -= 1
+                Print_Tabuleiro()
+                if pecas_capturadas == 0:
+                    return False #chamar movimento
+                else:
+                    Peca_Capturada(d1, d2)
+            elif d1_valido:
+                print("\n\u001b[4mO valor do Dado 1 permite retornar a peça capturada ao tabuleiro\u001b[0m\n" +
+                      "Pressione enter para realizar a jogada: ")
+                input()
+                pecas_posi[24-d1][0], pecas_capturadas_escuras[pecas_capturadas-1] = pecas_capturadas_escuras[pecas_capturadas-1], pecas_posi[24-d1][0]
+                pecas_capturadas -= 1
+                Print_Tabuleiro()
+                if pecas_capturadas == 0:
+                    return False
+                else:
+                    Peca_Capturada(d1, d2)
+            elif d2_valido:
+                print("\n\u001b[4mO valor do Dado 2 permite retornar a peça capturada ao tabuleiro\u001b[0m\n" +
+                      "Pressione enter para realizar a jogada: ")
+                input()
+                pecas_posi[24-d2][0], pecas_capturadas_escuras[pecas_capturadas-1] = pecas_capturadas_escuras[pecas_capturadas-1], pecas_posi[24-d2][0]
+                pecas_capturadas -= 1
+                Print_Tabuleiro()
+                if pecas_capturadas == 0:
+                    return False
+                else:
+                    Peca_Capturada(d1, d2)
+            else:
+                print("\n\u001b[4mNenhum dos dois valores permite retornar a peça capturada ao tabuleiro\u001b[0m\n" +
+                      "Passe a jogada =( \n")
+                jog_1 = True
+                jog_2 = False
+                Print_Tabuleiro()
+                return False
+            
 
 ################################################################################################
 ################################################################################################
@@ -208,76 +366,81 @@ print("Escolha um entre os dois jogadores para lançar primeiro o dado.\nAquele 
 while True:
     print("Pressione enter para a rolagem do dado:", end = '')
     input()
-    Dado_1 = Dado()
+    dado_1 = Dado()
     
     print("Pressione enter para a rolagem do dado:", end = '')
     input()
-    Dado_2 = Dado()
+    dado_2 = Dado()
     
-    if Dado_1 == Dado_2:
+    if dado_1 == dado_2:
         print("Empate nos dados. Repita o lançamento\n")
     else:
         break
 
-if Dado_1 > Dado_2:
-    print("A primeira pessoa que jogou o dado irá iniciar o jogo com as peças amarelas\n")
+if dado_1 > dado_2:
+    print("A primeira pessoa que jogou o dado irá iniciar o jogo com as peças brancas")
 else:
-    print("A segunda pessoa que jogou o dado irá iniciar o jogo com as peças amarelas\n")
+    print("A segunda pessoa que jogou o dado irá iniciar o jogo com as peças brancas")
 
-Jogador_1 = input("Jogador 1, entre com seu nome: ")
-Jogador_2 = input("\nJogador 2, entre com seu nome: ")
+while True:
+    Jogador_1 = input("\nJogador 1, entre com seu nome: ")
+    if Jogador_1.strip():
+        break
+    else:
+        print("Nome não digitado")
+
+while True:
+    Jogador_2 = input("\nJogador 2, entre com seu nome: ")
+    if Jogador_2.strip():
+        break
+    else:
+        print("Nome não digitado")
 
 print("\n\u001b[4mQue vença o melhor entre", Jogador_1, "e", Jogador_2, "\u001b[0m\n")
 Print_Tabuleiro()
 
 while True:
-    while Jog_1:
-        Dado_1, Dado_2 = Rola_Dado()
-        print("\nResultado dos dados: D1 =", Dado_1, "D2 =", Dado_2)
-        Opcoes(Dado_1, Dado_2)
+    while jog_1:
+        dado_1, dado_2 = Rola_Dado()
+        print("\nResultado dos dados: D1 =", dado_1, "D2 =", dado_2)
+        Peca_Capturada(dado_1, dado_2)
+        Opcoes(dado_1, dado_2)
 
         while True:
-            peca = [int(item) for item in input("Selecione a peça que você deseja mover (casa e linha): ").split()]
+            casa = int(input("Selecione a casa correspondente a peça que você deseja mover: "))
             
-            if len(peca) > 2:
-                print("\u001b[41mValor inválido:\u001b[0m Mais de dois valores. Repita a operação.\n")
-            elif peca[1] == 0 or peca[1] > 5:
-                print("\u001b[41mValor inválido:\u001b[0m Valor de linha inválido. Repita a operação.\n")
-            elif peca[0] == 0 or peca[0] > 24:
-                print("\u001b[41mValor inválido:\u001b[0m Valor de casa inválido. Repita a operação.\n")
-            elif pecas_posi[24-peca[0]][peca[1]-1] == PC_NULA:
-                print("\u001b[41mJogada inválida:\u001b[0m Você selecionou um espaço vazio. Tente novamente\n")
-            elif pecas_posi[24-peca[0]][peca[1]-1] == PC_ESCURA:
-                print("\u001b[41mJogada inválida:\u001b[0m Você selecionou a peça do adversário. Tente novamente\n")
+            if casa == 0 or casa > 24:
+                print("\u001b[41mValor inválido:\u001b[0m Fora da faixa de 1 até 24. Repita a operação.\n")
+            elif pecas_posi[24-casa][0] == PC_NULA:
+                print("\u001b[41mJogada inválida:\u001b[0m Você selecionou uma casa vazia. Tente novamente\n")
+            elif pecas_posi[24-casa][0] == PC_ESCURA:
+                print("\u001b[41mJogada inválida:\u001b[0m Você selecionou a casa do adversário. Tente novamente\n")
             else:
                 print("Funfou")
-                Jog_1 = False
-                Jog_2 = True
+                jog_1 = False
+                jog_2 = True
                 Print_Tabuleiro()
                 break
    
-    while Jog_2:
-        Dado_1, Dado_2 = Rola_Dado()
-        print("\nResultado dos dados: D1 =", Dado_1, "D2 =", Dado_2)
-        Opcoes(Dado_1, Dado_2)
+    while jog_2:
+        dado_1, dado_2 = Rola_Dado()
+        print("\nResultado dos dados: D1 =", dado_1, "D2 =", dado_2)
+        Peca_Capturada(dado_1, dado_2)
+        Opcoes(dado_1, dado_2)
 
         while True:
-            peca = [int(item) for item in input("Selecione a peça que você deseja mover (casa e linha): ").split()]
+            casa = int(input("Selecione a casa correspondente a peça que você deseja mover: "))
             
-            if len(peca) > 2:
-                print("\u001b[41mValor inválido:\u001b[0m Mais de dois valores. Repita a operação.\n")
-            elif peca[1] == 0 or peca[1] > 5:
-                print("\u001b[41mValor inválido:\u001b[0m Valor de linha inválido. Repita a operação.\n")
-            elif peca[0] == 0 or peca[0] > 24:
-                print("\u001b[41mValor inválido:\u001b[0m Valor de casa inválido. Repita a operação.\n")
-            elif pecas_posi[24-peca[0]][peca[1]-1] == PC_NULA:
-                print("\u001b[41mJogada inválida:\u001b[0m Você selecionou um espaço vazio. Tente novamente\n")
-            elif pecas_posi[24-peca[0]][peca[1]-1] == PC_CLARA:
-                print("\u001b[41mJogada inválida:\u001b[0m Você selecionou a peça do adversário. Tente novamente\n")
+            if casa == 0 or casa > 24:
+                print("\u001b[41mValor inválido:\u001b[0m Fora da faixa de 1 até 24. Repita a operação.\n")
+            elif pecas_posi[24-casa][0] == PC_NULA:
+                print("\u001b[41mJogada inválida:\u001b[0m Você selecionou uma casa vazia. Tente novamente\n")
+            elif pecas_posi[24-casa][0] == PC_CLARA:
+                print("\u001b[41mJogada inválida:\u001b[0m Você selecionou a casa do adversário. Tente novamente\n")
             else:
                 print("Funfou")
-                Jog_1 = True
-                Jog_2 = False
+                jog_1 = True
+                jog_2 = False
                 Print_Tabuleiro()
                 break
 
