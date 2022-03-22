@@ -1,17 +1,18 @@
+from glob import glob
+
 def init():
     """Função para definição das variáveis globais"""
 
     # Variáveis que determina a cores das peças
-
     # Círculo branco
     global PC_CLARA
-    PC_CLARA = '\u001b[37;1m●' 
+    PC_CLARA = '\u001b[38;5;231m●' 
     # Círculo preto
     global PC_ESCURA
     PC_ESCURA = '\u001b[38;5;232m●'
     # Círculo pontilhado branco
     global PC_NULA
-    PC_NULA = '\u001b[37;1m◌'
+    PC_NULA = '\u001b[38;5;231m◌'
     # Barra azul
     global CS_CLARA
     CS_CLARA = '\u001b[34;1m|\u001b[0m'
@@ -59,15 +60,21 @@ def init():
     global dado_2
     dado_2 = 1
 
-    # Variáveis que indicam se os dados são válidos para retorno da peça
-    # capturada e também serve para saber qual dado foi utilizado
-    global d1_valido
-    d1_valido = False
-    global d2_valido
-    d2_valido = False
+    # Variável que sinaliza qual dado foi usado para o retorno de uma peça capturada
+    # ou para o movimento de uma peça
+    global dado_usado
+    dado_usado = 0
+
+    # Variável para contar a quantidade de jogadas
+    global cont_jogadas
+    cont_jogadas = 0
 
     # Variáveis para sinalizar quem é o jogador da vez
     global jog_1
     jog_1 = True
     global jog_2
     jog_2 = False
+
+    # Variáveis contendo os nomes dos jogadores
+    global jogador_1
+    global jogador_2
