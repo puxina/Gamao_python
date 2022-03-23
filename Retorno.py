@@ -2,6 +2,7 @@
 import Var
 import Tabuleiro
 
+###############################################
 def Dado_Valido(d1, d2):
     """Verificação de quais dados são válidos para retornar a peça ao tabuleiro, conforme
        três possíveis condições de retorno: casa vazia, captura do oponente e casa com
@@ -54,18 +55,16 @@ def Dado_Valido(d1, d2):
                 d2_val = True
                 casa_d2_cond = 3
         # Jogador 2 e Condição 3: Dado válido para retorno em uma casa que contém peças suas (pretas)
-        else:
+        elif Var.jog_2 and Var.pecas_posi[23-cont][0] == Var.PC_ESCURA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 3
             if d2 == (cont+1):
                 d2_val = True
                 casa_d2_cond = 3
-        
     return d1_val, d2_val, casa_d1_cond, casa_d2_cond
 
-
-# Função
+###############################################
 def Retorno(casa_cond, dado, pc_cap_cl, pc_cap_es):
     """Função para permutar a peça que será retornada ao tabuleiro, conforme a condição possível"""
     pecas_casa = 0
@@ -80,7 +79,7 @@ def Retorno(casa_cond, dado, pc_cap_cl, pc_cap_es):
             Var.pecas_posi[dado-1][0], Var.pecas_capturadas_escuras[pc_cap_es] = Var.pecas_capturadas_escuras[pc_cap_es], Var.pecas_posi[dado-1][0]
             Var.pecas_posi[dado-1][0], Var.pecas_capturadas_claras[pc_cap_cl-1] = Var.pecas_capturadas_claras[pc_cap_cl-1], Var.pecas_posi[dado-1][0]
         # Dado válido para retorno em uma casa que contém peças suas (brancas)
-        else:
+        elif casa_cond == 3:
             for cont in range(len(Var.pecas_posi[dado-1])):
                 if Var.pecas_posi[dado-1][cont] == Var.PC_CLARA:
                     pecas_casa += 1
@@ -97,14 +96,14 @@ def Retorno(casa_cond, dado, pc_cap_cl, pc_cap_es):
             Var.pecas_posi[24-dado][0], Var.pecas_capturadas_claras[pc_cap_cl] = Var.pecas_capturadas_claras[pc_cap_cl], Var.pecas_posi[24-dado][0]
             Var.pecas_posi[24-dado][0], Var.pecas_capturadas_escuras[pc_cap_es-1] = Var.pecas_capturadas_escuras[pc_cap_es-1], Var.pecas_posi[24-dado][0]
         # Dado válido para retorno em uma casa que contém peças suas (brancas)
-        else:
+        elif casa_cond == 3:
             for cont in range(len(Var.pecas_posi[dado-1])):
                 if Var.pecas_posi[24-dado][cont] == Var.PC_ESCURA:
                     pecas_casa += 1
             Var.pecas_posi[24-dado][pecas_casa], Var.pecas_capturadas_escuras[pc_cap_es-1] = Var.pecas_capturadas_escuras[pc_cap_es-1], Var.pecas_posi[24-dado][pecas_casa]
         return
 
-
+###############################################
 def Peca_Capturada(d1, d2):
     """Função para determinar se há peças capturadas dos jogadores e quais valores valores de dados usará para
        o retorno da peça ao tabuleiro"""
