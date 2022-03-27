@@ -1,7 +1,7 @@
 # Função das variáveis globais
 from re import T
 import var_global
-import Tabuleiro
+import tabuleiro
 
 ###############################################
 def casa_selecao():
@@ -70,12 +70,12 @@ def jogada_validade(casa, dado):
     elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][1] == var_global.pc_escura:
         print("\n\u001b[41mJogada inválida:\u001b[0m A opção escolhida leva sua peça\n" +
                 "para uma casa bloqueada. Tente novamente\n")
-        Tabuleiro.print_tabuleiro()
+        tabuleiro.print_tabuleiro()
         return 2
     elif var_global.jog_2 and var_global.pecas_posi[movimento_escura][1] == var_global.pc_clara:
         print("\n\u001b[41mJogada inválida:\u001b[0m A opção escolhida leva sua peça\n" +
                 "para uma casa bloqueada. Tente novamente\n")
-        Tabuleiro.print_tabuleiro()
+        tabuleiro.print_tabuleiro()
         return 2
     # Movimento de captura
     elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][1] == var_global.pc_nula \

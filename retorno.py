@@ -1,6 +1,6 @@
 # Função escrita para o programa
 import var_global
-import Tabuleiro
+import tabuleiro
 
 ###############################################
 def dado_valido(d1, d2):
@@ -147,7 +147,7 @@ def peca_capturada(d1, d2):
                 else:
                     peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
                     var_global.dado_usado = 2
-                Tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro()
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[0] == 1:
                     if var_global.cont_jogadas == 2:
@@ -164,7 +164,7 @@ def peca_capturada(d1, d2):
                 input()
                 peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
                 var_global.dado_usado = 1
-                Tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro()
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[0] == 1:
                     if var_global.cont_jogadas == 2:
@@ -180,7 +180,7 @@ def peca_capturada(d1, d2):
                 input()
                 peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
                 var_global.dado_usado = 2
-                Tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro()
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[0] == 1:
                     if var_global.cont_jogadas == 2:
@@ -223,7 +223,7 @@ def peca_capturada(d1, d2):
                 else:
                     peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
                     var_global.dado_usado = 2
-                Tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro()
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[1] == 1:
                     if var_global.cont_jogadas == 2:
@@ -240,7 +240,7 @@ def peca_capturada(d1, d2):
                 input()
                 peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
                 var_global.dado_usado = 1
-                Tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro()
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[1] == 1:
                     if var_global.cont_jogadas == 2:
@@ -256,7 +256,7 @@ def peca_capturada(d1, d2):
                 input()
                 peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
                 var_global.dado_usado = 2
-                Tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro()
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[1] == 1:
                     if var_global.cont_jogadas == 2:
