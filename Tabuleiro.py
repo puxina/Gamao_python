@@ -1,7 +1,7 @@
 # Função das variáveis globais
 import Var
 
-def Print_Tabuleiro():
+def print_tabuleiro():
     """Definição da função que printa o tabuleiro e as peças na tela"""
 
     print("\u001b[37;1mPeças Escuras retiradas do jogo: \u001b[48;5;244m", end = '')
@@ -20,19 +20,19 @@ def Print_Tabuleiro():
         # Lado esquerdo
         for coluna in range(6):
             if coluna % 2 == 0:
-                print(Var.CS_CLARA + "\u001b[48;5;12m " + Var.pecas_posi[coluna][linha] + " \u001b[0m" + Var.CS_CLARA, end = '')
+                print(Var.cs_clara + "\u001b[48;5;12m " + Var.pecas_posi[coluna][linha] + " \u001b[0m" + Var.cs_clara, end = '')
             else:
-                print(Var.CS_ESCURA + "\u001b[48;5;9m " + Var.pecas_posi[coluna][linha] + " \u001b[0m" + Var.CS_ESCURA, end = '')
+                print(Var.cs_escura + "\u001b[48;5;9m " + Var.pecas_posi[coluna][linha] + " \u001b[0m" + Var.cs_escura, end = '')
         
         # Meio do tabuleiro para as peças claras capturadas
-        print(Var.CS_MEIO + "\u001b[42;1m " + Var.pecas_capturadas_claras[linha] + " \u001b[0m" + Var.CS_MEIO, end = '')
+        print(Var.cs_meio + "\u001b[42;1m " + Var.pecas_capturadas_claras[linha] + " \u001b[0m" + Var.cs_meio, end = '')
         
         # Lado direito
         for coluna in range(6, 12):
             if coluna % 2 == 0:
-                print(Var.CS_CLARA + "\u001b[48;5;12m " + Var.pecas_posi[coluna][linha] + " \u001b[0m" + Var.CS_CLARA, end = '')
+                print(Var.cs_clara + "\u001b[48;5;12m " + Var.pecas_posi[coluna][linha] + " \u001b[0m" + Var.cs_clara, end = '')
             else:
-                print(Var.CS_ESCURA + "\u001b[48;5;9m " + Var.pecas_posi[coluna][linha] + " \u001b[0m" + Var.CS_ESCURA, end = '')
+                print(Var.cs_escura + "\u001b[48;5;9m " + Var.pecas_posi[coluna][linha] + " \u001b[0m" + Var.cs_escura, end = '')
         print()
     print()
 
@@ -42,18 +42,18 @@ def Print_Tabuleiro():
         # Lado esquerdo
         for coluna in range(23, 17, -1):
             if coluna % 2 == 0:
-                print(Var.CS_CLARA + "\u001b[48;5;12m " + Var.pecas_posi[coluna][linha-1] + " \u001b[0m" + Var.CS_CLARA, end = '')
+                print(Var.cs_clara + "\u001b[48;5;12m " + Var.pecas_posi[coluna][linha-1] + " \u001b[0m" + Var.cs_clara, end = '')
             else:
-                print(Var.CS_ESCURA + "\u001b[48;5;9m " + Var.pecas_posi[coluna][linha-1] + " \u001b[0m" + Var.CS_ESCURA, end = '')
+                print(Var.cs_escura + "\u001b[48;5;9m " + Var.pecas_posi[coluna][linha-1] + " \u001b[0m" + Var.cs_escura, end = '')
         
         # Meio do tabuleiro para as peças escuras capturadas
-        print(Var.CS_MEIO + "\u001b[42;1m " + Var.pecas_capturadas_escuras[linha-1] + " \u001b[0m" + Var.CS_MEIO, end = '')
+        print(Var.cs_meio + "\u001b[42;1m " + Var.pecas_capturadas_escuras[linha-1] + " \u001b[0m" + Var.cs_meio, end = '')
         
         # Lado direito
         for coluna in range(17, 11, -1):
             if coluna % 2 == 0:
-                print(Var.CS_CLARA + "\u001b[48;5;12m " + Var.pecas_posi[coluna][linha-1] + " \u001b[0m" + Var.CS_CLARA, end = '')
+                print(Var.cs_clara + "\u001b[48;5;12m " + Var.pecas_posi[coluna][linha-1] + " \u001b[0m" + Var.cs_clara, end = '')
             else:
-                print(Var.CS_ESCURA + "\u001b[48;5;9m " + Var.pecas_posi[coluna][linha-1] + " \u001b[0m" + Var.CS_ESCURA, end = '')
+                print(Var.cs_escura + "\u001b[48;5;9m " + Var.pecas_posi[coluna][linha-1] + " \u001b[0m" + Var.cs_escura, end = '')
         print()
     print("\u001b[1m     01   02   03   04   05   06        07   08   09   10   11   12\u001b[0m\n")

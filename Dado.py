@@ -1,11 +1,10 @@
 # Funções do Pyhon
 import random
-import os
 
 # Seed para geração aleatória dos números obtido do sistema Windows
-random.seed(os.urandom(1))
+random.seed()
 
-def Print_Dado():
+def print_dado():
     """Função para imprimir na tela a figura do dado e retorna seu valor"""
     valor = random.randint(1, 6)
     if valor == 1:
