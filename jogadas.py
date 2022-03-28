@@ -237,18 +237,18 @@ def peca_movimento(casa, movimento, dado):
         # Jogador 1 e peças na casa de 5 a menos
         if var_global.jog_1 and quant_ori <= 5:
             var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_retiradas_claras[quant_ret] = var_global.pecas_retiradas_claras[quant_ret], var_global.pecas_posi[posi_casa][quant_ori-1]
-            var_global.pecas_retiradas_claras_quant = quant_ret
+            var_global.pecas_retiradas_claras_quant = quant_ret+1
         # Jogador 1 e peças na casa de 5 a menos
         elif var_global.jog_2 and quant_ori <= 5:
             var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_retiradas_escuras[quant_ret] = var_global.pecas_retiradas_escuras[quant_ret], var_global.pecas_posi[posi_casa][quant_ori-1]
-            var_global.pecas_retiradas_escuras_quant = quant_ret
+            var_global.pecas_retiradas_escuras_quant = quant_ret+1
 
     return
 
 ###############################################
 def jogada_dados_diff(opcao, d1, d2):
-    """Função que verifica se a peça pode ser deslocada conforme o valor do dado ou não.
-       Se for válida, a peça será deslocada"""
+    """Função que verifica se a peça pode ser deslocada, para dados com valores diferentes,
+       conforme seu valor. Se for válida, a peça será deslocada"""
     movimento = [0, 0]
     # Mover uma peça: usando D1 primeiro e depois D2
     if opcao == 1:
@@ -391,23 +391,267 @@ def jogada_dados_diff(opcao, d1, d2):
             return True
 
 ###############################################
+def jogada_dados_igual(opcao, dado):
+    """Função que verifica se a peça pode ser deslocada, para dados com valores iguais,
+       conforme seu valor. Se for válida, a peça será deslocada"""
+    movimento = [0, 0, 0, 0]
+    casa_x = [0, 0, 0, 0]
+
+    # Mover uma peça: usando 4*D1
+    if opcao == 1:
+        # Validade das quatro jogadas
+        casa_x[0] = casa_selecao()
+        if var_global.jog_1:
+            for cont in range(4):
+                movimento[cont] = jogada_validade(casa_x[0]-cont*dado, dado)
+                if movimento[cont] == 2:
+                    return False
+        else:
+            for cont in range(4):
+                movimento[cont] = jogada_validade(casa_x[0]+cont*dado, dado)
+                if movimento[cont] == 2:
+                    return False
+        
+        # Se não há movimentos inválidos
+        if var_global.jog_1:
+            for cont in range(4):
+                peca_movimento(casa_x[0]-cont*dado, movimento[cont], dado)
+        else:
+            for cont in range(4):
+                peca_movimento(casa_x[0]+cont*dado, movimento[cont], dado)
+        
+        tabuleiro.print_tabuleiro()
+        return True
+    
+    # Mover duas peças: usando 2*D1 e 2*D1
+    elif opcao == 2:
+        # Peça 1
+        casa_x[0] = casa_selecao()
+        movimento[0] = jogada_validade(casa_x[0], 2*dado)
+        # Testa jogada inválida com D1 e retorna à função Opções caso verdade
+        if movimento[0] == 2:
+            return False
+
+        # Testa se a peça é a mesma. Se for, chama exceção
+        while True:
+            try:
+                # Peça 2
+                casa_x[1] = casa_selecao()
+                movimento[1] = jogada_validade(casa_x[1], 2*dado)
+                if movimento[1] == 2:
+                    return False
+                elif var_global.jog_1:
+                    if (casa_x[1] + 2*dado) == casa_x[0]:
+                        raise ValueError
+                    else:
+                        break
+                elif var_global.jog_2:
+                    if (casa_x[1] - 2*dado) == casa_x[0]:
+                        raise ValueError
+                    else:
+                        break
+            except ValueError:
+                print("\nA peça selecionada foi a mesma. Você deve selecionar outra peça.\n")
+        
+        peca_movimento(casa_x[0], movimento[0], 2*dado)
+        peca_movimento(casa_x[1], movimento[1], 2*dado)
+        tabuleiro.print_tabuleiro()
+        return True
+
+    # Mover duas peças: usando 3*D1 e D1
+    elif opcao == 3:
+        # Peça 1
+        casa_x[0] = casa_selecao()
+        movimento[0] = jogada_validade(casa_x[0], 3*dado)
+        # Testa jogada inválida com D1 e retorna à função Opções caso verdade
+        if movimento[0] == 2:
+            return False
+
+        # Testa se a peça é a mesma. Se for, chama exceção
+        while True:
+            try:
+                # Peça 2
+                casa_x[1] = casa_selecao()
+                movimento[1] = jogada_validade(casa_x[1], dado)
+                if movimento[1] == 2:
+                    return False
+                elif var_global.jog_1:
+                    if (casa_x[1] + 2*dado) == casa_x[0]:
+                        raise ValueError
+                    else:
+                        break
+                elif var_global.jog_2:
+                    if (casa_2 - dado) == casa_1:
+                        raise ValueError
+                    else:
+                        break
+            except ValueError:
+                print("\nA peça selecionada foi a mesma. Você deve selecionar outra peça.\n")
+
+        peca_movimento(casa_x[0], movimento[0], 3*dado)
+        peca_movimento(casa_x[1], movimento[1], dado)
+        tabuleiro.print_tabuleiro()
+        return True
+
+    # Mover três peças: usando 2*D1, D1 e D1
+    elif opcao == 4:
+        # Testa se a peça é a mesma. Se for, chama exceção
+        # Peça 1, 2 e 3
+        for cont in range(3):
+            casa_x[cont] = casa_selecao()
+            while True:
+                try:
+                    if cont == 0:
+                        movimento[cont] = jogada_validade(casa_x[cont], 2*dado)
+                    else:
+                        movimento[cont] = jogada_validade(casa_x[cont], dado)
+                    
+                    if movimento[cont] == 2:
+                        return False
+                    elif var_global.jog_1 and cont == 1:
+                        if (casa_x[cont] + dado) == casa_x[cont-1]:
+                            raise ValueError
+                        else:
+                            break
+                    elif var_global.jog_1 and cont == 2:
+                        if (casa_x[cont] + 2*dado) == casa_x[cont-2] or (casa_x[cont] + dado) == casa_x[cont-1]:
+                            raise ValueError
+                        else:
+                            break
+                    elif var_global.jog_2 and cont == 1:
+                        if (casa_x[cont] - dado) == casa_x[cont-1]:
+                            raise ValueError
+                        else:
+                            break
+                    elif var_global.jog_2 and cont == 2:
+                        if (casa_x[cont] - 2*dado) == casa_x[cont-2] or (casa_x[cont] - dado) == casa_x[cont-1]:
+                            raise ValueError
+                        else:
+                            break
+                except ValueError:
+                    print("\nA peça selecionada foi a mesma. Você deve selecionar outra peça.\n")
+
+        peca_movimento(casa_x[0], movimento[0], 2*dado)
+        peca_movimento(casa_x[1], movimento[1], dado)
+        peca_movimento(casa_x[2], movimento[2], dado)
+        tabuleiro.print_tabuleiro()
+        return True
+
+    # Mover quatro peças: usando D1, D1, D1 e D1
+    elif opcao == 5:
+        # Testa se a peça é a mesma. Se for, chama exceção
+        # Peça 1, 2, 3 e 4
+        for cont in range(4):
+            casa_x[cont] = casa_selecao()
+            while True:
+                try:
+                    movimento[cont] = jogada_validade(casa_x[cont], dado)
+                    
+                    if movimento[cont] == 2:
+                        return False
+                    elif var_global.jog_1 and cont == 1:
+                        if (casa_x[cont] + dado) == casa_x[cont-1]:
+                            raise ValueError
+                        else:
+                            break
+                    elif var_global.jog_1 and cont == 2:
+                        if (casa_x[cont] + 2*dado) == casa_x[cont-2] or (casa_x[cont] + dado) == casa_x[cont-1]:
+                            raise ValueError
+                        else:
+                            break
+                    elif var_global.jog_1 and cont == 3:
+                        if (casa_x[cont] + 3*dado) == casa_x[cont-3] or (casa_x[cont] + 2*dado) == casa_x[cont-2] \
+                            or (casa_x[cont] + dado) == casa_x[cont-1]:
+                            raise ValueError
+                        else:
+                            break
+                    elif var_global.jog_2 and cont == 1:
+                        if (casa_x[cont] - dado) == casa_x[cont-1]:
+                            raise ValueError
+                        else:
+                            break
+                    elif var_global.jog_2 and cont == 2:
+                        if (casa_x[cont] - 2*dado) == casa_x[cont-2] or (casa_x[cont] - dado) == casa_x[cont-1]:
+                            raise ValueError
+                        else:
+                            break
+                    elif var_global.jog_2 and cont == 3:
+                        if (casa_x[cont] - 3*dado) == casa_x[cont-3] or (casa_x[cont] - 2*dado) == casa_x[cont-2] \
+                            or (casa_x[cont] - dado) == casa_x[cont-1]:
+                            raise ValueError
+                        else:
+                            break
+                except ValueError:
+                    print("\nA peça selecionada foi a mesma. Você deve selecionar outra peça.\n")
+        
+        peca_movimento(casa_x[0], movimento[0], dado)
+        peca_movimento(casa_x[1], movimento[1], dado)
+        peca_movimento(casa_x[2], movimento[2], dado)
+        peca_movimento(casa_x[3], movimento[3], dado)
+        tabuleiro.print_tabuleiro()
+        return True
+        
+
+###############################################
 def jogada_opcoes(d1, d2):
     """Função para indicar as várias opções disponíveis do uso dos dados ao jogador"""
     if d1 == d2 and var_global.cont_jogadas == 0:
         while True:
+            # Tratamento de exceção quando usuário entra com opção inválida
             try:
-                print("\nSelecione uma das opções de jogadas disponíveis abaixo:\n")
-                print("1 - A soma dos dados")
-                print("2 - Dado D1+D2")
-                print("3 - Dado D2+D3")
-                print("4 - Dado D3+D4\n")
+                print("\u001b[4m", end = "")
+                if var_global.jog_1:
+                    print(var_global.jogador_1, end = "")
+                else:
+                    print(var_global.jogador_2, end = "")
+                print(", selecione uma das opções de jogadas disponíveis abaixo:\u001b[0m\n")
+                print("1 - Mover uma peça: usando quatro vezes D1 = " + str(d1))
+                print("2 - Mover duas peças: a primeira duas vezes D1 = " + str(d1) + " e a segunda duas vezes D1 = " + str(d1))
+                print("3 - Mover duas peças: a primeira três vezes D1 = " + str(d1) + " e a segunda uma vez D1 = " + str(d1))
+                print("4 - Mover três peças: a primeira duas vezes D1 = " + str(d1) + ", a segunda uma vez D1 = " + str(d1) + " e a terceira uma vez D1 = " + str(d1))
+                print("5 - Mover quatro peças: cada peça uma vez com D1 = " + str(d1) + "\n")
                 opcao = int(input("Opção: "))
-                if opcao < 1 or opcao > 4:
+                if opcao < 1 or opcao > 5:
                     raise ValueError
                 else:
-                    return opcao
+                    # Movimento de uma peça 4*D1
+                        if opcao == 1:
+                            if jogada_dados_igual(opcao, d1):
+                                return
+                            else:
+                                jogada_opcoes(d1, d2)
+                                return
+                        # Movimento de duas peças 2*D1
+                        elif opcao == 2:
+                            if jogada_dados_igual(opcao, d1):
+                                return
+                            else:
+                                jogada_opcoes(d1, d2)
+                                return
+                        # Movimento de duas peças 3*D1 e D1
+                        elif opcao == 3:
+                            if jogada_dados_igual(opcao, d1):
+                                return
+                            else:
+                                jogada_opcoes(d1, d2)
+                                return
+                        # Movimento de três peças 2*D1, D1 e D1
+                        elif opcao == 4:
+                            if jogada_dados_igual(opcao, d1):
+                                return
+                            else:
+                                jogada_opcoes(d1, d2)
+                                return
+                        # Movimento de quatro peças D1, D1, D1 e D1
+                        else:
+                            if jogada_dados_igual(opcao, d1):
+                                return
+                            else:
+                                jogada_opcoes(d1, d2)
+                                return
+            # Exceção
             except ValueError:
-                print("\u001b[41mOpção inválida.\u001b[0m Repita a operação.")
+                print("\n\u001b[41mOpção inválida.\u001b[0m Repita a operação.\n")
     
     # Possibilidades em caso de dois dados diferentes
     else:
