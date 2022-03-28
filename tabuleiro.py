@@ -1,3 +1,11 @@
+"""
+Módulo para a impressão na tela da atual situação do tabuleiro/jogo
+
+Função:
+    * print_tabuleiro():
+        Não recebe e nem retorna argumento algum
+"""
+
 # Função das variáveis globais
 import var_global
 

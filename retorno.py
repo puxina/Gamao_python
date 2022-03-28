@@ -1,3 +1,25 @@
+"""
+Módulo para tratar se há ou não peça(s) para retornar, verificando
+a condição e realizando o retorno, caso esse seja válido. Em caso
+de sobrar ainda um dado para ser usado em movimento, será sinali-
+zado e a jogada será executada conforme o dado que sobrou dentro
+do módulo jogadas.py
+
+Funções:
+    * dado_valido(d1, d2):
+        Recebe os valores dos dados e retorna se os dados são 
+        válidos e para quais condições (casa vazia, captura ou
+        casa com peças do jogador)
+    
+    * peca_retorno(casa_cond, dado, pc_cap_cl, pc_cap_es):
+        Recebe o tipo de condição de retorno, o valor do dado e,
+        se há peça para capturar, sua posição. Realiza a permuta
+    
+    * peca_capturada(d1, d2):
+        Recebe os valores dos dados e determina se há peças capturadas
+        para que elas possam ser retornadas
+"""
+
 # Função escrita para o programa
 import var_global
 import tabuleiro

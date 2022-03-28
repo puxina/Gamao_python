@@ -1,3 +1,23 @@
+"""
+Módulo que trata de tudo relacionado as jogadas de movimento das peças
+e suas retiradas
+
+Funções:
+    * casa_selecao():
+
+    * retirada_cond():
+
+    * jogada_validade(casa, dado):
+
+    * peca_movimento(casa, movimento, d1, d2):
+
+    * jogada_dados_diff(opcao, d1, d2):
+
+    * jogada_dados_igual(opcao, d1, d2):
+
+    * jogada_opcoes(d1, d2):
+"""
+
 # Função das variáveis globais
 from re import T
 import var_global
@@ -10,15 +30,34 @@ def casa_selecao():
             casa = int(input("Selecione a casa correspondente a peça que você deseja mover: "))
             
             if casa == 0 or casa > 24:
-                print("\u001b[41mValor inválido:\u001b[0m Fora da faixa de 1 até 24. Repita a operação.\n")
+                print("\n\u001b[41mValor inválido:\u001b[0m Fora da faixa de 1 até 24. Repita a operação.\n")
             elif var_global.pecas_posi[24-casa][0] == var_global.pc_nula:
-                print("\u001b[41mJogada inválida:\u001b[0m Você selecionou uma casa vazia. Tente novamente\n")
+                print("\n\u001b[41mJogada inválida:\u001b[0m Você selecionou uma casa vazia. Tente novamente\n")
             elif var_global.jog_1 and var_global.pecas_posi[24-casa][0] == var_global.pc_escura:
-                print("\u001b[41mJogada inválida:\u001b[0m Você selecionou a casa do adversário. Tente novamente\n")
+                print("\n\u001b[41mJogada inválida:\u001b[0m Você selecionou a casa do adversário. Tente novamente\n")
             elif var_global.jog_2 and var_global.pecas_posi[24-casa][0] == var_global.pc_clara:
-                print("\u001b[41mJogada inválida:\u001b[0m Você selecionou a casa do adversário. Tente novamente\n")
+                print("\n\u001b[41mJogada inválida:\u001b[0m Você selecionou a casa do adversário. Tente novamente\n")
             else:
                 return casa
+
+###############################################
+def casa_cont(casa):
+    """Função da contagem de peças na casa"""
+
+    quant = 0
+    casa_posi = 24-casa
+
+    for cont in range(5):
+        if var_global.jog_1 and var_global.pecas_posi[casa_posi][cont] == var_global.pc_clara:
+            quant += 1
+        elif var_global.jog_2 and var_global.pecas_posi[casa_posi][cont] == var_global.pc_escura:
+            quant += 1
+        elif var_global.pecas_posi[casa_posi][cont] == var_global.pc_nula:
+            break
+        elif var_global.pecas_posi[casa_posi][cont].isnumeric():
+            quant += var_global.pecas_posi[casa_posi][cont]
+
+    return quant
 
 ###############################################
 def retirada_cond():
@@ -52,20 +91,24 @@ def jogada_validade(casa, dado):
 
     # Movimento de retirada se casa campo com todas as peças
     if var_global.jog_1 and movimento_clara > 23:
-        if var_global.pecas_casa_campo_clara == 15:
+        if var_global.pecas_casa_campo_clara == 15 and var_global.pecas_capturadas_claras[0] == var_global.pc_nula:
             return 5
         else:
+            print("\nCondição para as retiradas de peças do jogo não atingida. Tente novamente\n")
             return 2
     elif var_global.jog_2 and movimento_escura < 0:
-        if var_global.pecas_casa_campo_escura == 15:
+        if var_global.pecas_casa_campo_escura == 15 and var_global.pecas_capturadas_escuras[0] == var_global.pc_nula:
             return 5
         else:
+            print("\nCondição para as retiradas de peças do jogo não atingida. Tente novamente\n")
             return 2
+    
     # Movimento válido se casa vazia
     elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][0] == var_global.pc_nula:
         return 1
     elif var_global.jog_2 and var_global.pecas_posi[movimento_escura][0] == var_global.pc_nula:
         return 1
+    
     # Movimento inválido se casa bloqueada
     elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][1] == var_global.pc_escura:
         print("\n\u001b[41mJogada inválida:\u001b[0m A opção escolhida leva sua peça\n" +
@@ -77,6 +120,7 @@ def jogada_validade(casa, dado):
                 "para uma casa bloqueada. Tente novamente\n")
         tabuleiro.print_tabuleiro()
         return 2
+    
     # Movimento de captura
     elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][1] == var_global.pc_nula \
          and var_global.pecas_posi[movimento_clara][0] == var_global.pc_escura:
@@ -86,6 +130,7 @@ def jogada_validade(casa, dado):
          and var_global.pecas_posi[movimento_escura][0] == var_global.pc_clara:
         print("\nA opção escolhida leva sua peça a capturar a peça do adversário\n")
         return 3
+    
     # Movimento válido de sobreposição se peças do jogador
     elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][0] == var_global.pc_clara:
         return 4
@@ -93,31 +138,112 @@ def jogada_validade(casa, dado):
         return 4
 
 ###############################################
-def peca_movimento(casa, movimento, d1, d2):
-    """Função que irá movimentará a peça conforme a situação"""
+def peca_movimento(casa, movimento, dado):
+    """Função que irá movimentar a peça conforme a situação"""
+
+    posi_casa = 24-casa
+    movimento_clara = 24-casa+dado
+    movimento_escura = 24-casa-dado
+    quant_ori = casa_cont(casa)
 
     # Movimento para casa vazia
     if movimento == 1:
-        if var_global.jog_1:
-            var_global.pecas_posi[0][0]
-            retirada_cond()
-            return
-        else:
-            var_global.pecas_posi[0][0]
-            retirada_cond()
-            return
+        # Jogador 1 e peças na casa de 5 a menos
+        if var_global.jog_1 and quant_ori <= 5:
+            var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_posi[movimento_clara][0] = var_global.pecas_posi[movimento_clara][0], var_global.pecas_posi[posi_casa][quant_ori-1]
+        # Jogador 1 e peças na casa mais de 5
+        elif var_global.jog_1 and quant_ori > 5:
+            var_global.pecas_posi[posi_casa][4] -= 1
+            if var_global.pecas_posi[posi_casa][4] == 1:
+                var_global.pecas_posi[posi_casa][4], var_global.pecas_extras[posi_casa][0] = var_global.pecas_extras[posi_casa][0], var_global.pecas_posi[posi_casa][4]
+                var_global.pecas_posi[posi_casa][4], var_global.pecas_posi[movimento_clara][0] = var_global.pecas_posi[movimento_clara][0], var_global.pecas_posi[posi_casa][4]
+            #else:
+        # Jogador 2 e peças na casa de 5 a menos
+        elif var_global.jog_2 and quant_ori <= 5:
+            var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_posi[movimento_escura][0] = var_global.pecas_posi[movimento_escura][0], var_global.pecas_posi[posi_casa][quant_ori-1]
+        # Jogador 2 e peças na casa mais de 5
+        elif var_global.jog_2 and quant_ori > 5:
+            var_global.pecas_posi[posi_casa][4] -= 1
+            if var_global.pecas_posi[posi_casa][4] == 1:
+                var_global.pecas_posi[posi_casa][4], var_global.pecas_extras[posi_casa][0] = var_global.pecas_extras[posi_casa][0], var_global.pecas_posi[posi_casa][4]
+                var_global.pecas_posi[posi_casa][4], var_global.pecas_posi[movimento_escura][0] = var_global.pecas_posi[movimento_escura][0], var_global.pecas_posi[posi_casa][4]
+            #else:
     
     # Movimento para captura da peça adversária
     elif movimento == 3:
-        print("3")
+        pecas_capturadas = [0, 0]
+        for cont in range(5):
+            if var_global.pecas_capturadas_claras[cont] == var_global.pc_clara:
+                pecas_capturadas[0] += 1
+            if var_global.pecas_capturadas_escuras[cont] == var_global.pc_escura:
+                pecas_capturadas[1] += 1
+
+        # Jogador 1 e peças na casa de 5 a menos
+        if var_global.jog_1 and quant_ori <= 5:
+            var_global.pecas_posi[movimento_clara][0], var_global.pecas_capturadas_escuras[pecas_capturadas[1]] = var_global.pecas_capturadas_escuras[pecas_capturadas[1]], var_global.pecas_posi[movimento_clara][0]
+            var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_posi[movimento_clara][0] = var_global.pecas_posi[movimento_clara][0], var_global.pecas_posi[posi_casa][quant_ori-1]
+        # Jogador 1 e peças na casa mais de 5
+        elif var_global.jog_1 and quant_ori > 5:
+            var_global.pecas_posi[posi_casa][4] -= 1
+            if var_global.pecas_posi[posi_casa][4] == 1:
+                var_global.pecas_posi[posi_casa][4], var_global.pecas_extras[posi_casa][0] = var_global.pecas_extras[posi_casa][0], var_global.pecas_posi[posi_casa][4]
+                var_global.pecas_posi[movimento_clara][0], var_global.pecas_capturadas_escuras[pecas_capturadas[1]] = var_global.pecas_capturadas_escuras[pecas_capturadas[1]], var_global.pecas_posi[movimento_clara][0]
+                var_global.pecas_posi[posi_casa][4], var_global.pecas_posi[movimento_clara][0] = var_global.pecas_posi[movimento_clara][0], var_global.pecas_posi[posi_casa][4]
+        # Jogador 2 e peças na casa de 5 a menos
+        elif var_global.jog_2 and quant_ori <= 5:
+            var_global.pecas_posi[movimento_escura][0], var_global.pecas_capturadas_claras[pecas_capturadas[0]] = var_global.pecas_capturadas_claras[pecas_capturadas[0]], var_global.pecas_posi[movimento_escura][0]
+            var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_posi[movimento_escura][0] = var_global.pecas_posi[movimento_escura][0], var_global.pecas_posi[posi_casa][quant_ori-1]
+        # Jogador 2 e peças na casa mais de 5
+        elif var_global.jog_2 and quant_ori > 5:
+            var_global.pecas_posi[posi_casa][4] -= 1
+            if var_global.pecas_posi[posi_casa][4] == 1:
+                var_global.pecas_posi[posi_casa][4], var_global.pecas_extras[posi_casa][0] = var_global.pecas_extras[posi_casa][0], var_global.pecas_posi[posi_casa][4]
+                var_global.pecas_posi[movimento_escura][0], var_global.pecas_capturadas_claras[pecas_capturadas[0]] = var_global.pecas_capturadas_claras[pecas_capturadas[0]], var_global.pecas_posi[movimento_escura][0]
+                var_global.pecas_posi[posi_casa][4], var_global.pecas_posi[movimento_escura][0] = var_global.pecas_posi[movimento_escura][0], var_global.pecas_posi[posi_casa][4]
     
     # Movimento para sobrepor a peça do jogador
     elif movimento == 4:
-        print("4")
-    
+        if var_global.jog_1:
+            quant_des = casa_cont(casa-dado)
+        else:
+            quant_des = casa_cont(casa+dado)
+        # Jogador 1 e peças na casa de origem e destino menos de 5
+        if var_global.jog_1 and quant_ori < 5 and quant_des < 5:
+            var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_posi[movimento_clara][quant_des] = var_global.pecas_posi[movimento_clara][quant_des], var_global.pecas_posi[posi_casa][quant_ori-1]
+        # Jogador 1 e peças na casa de origem menos de 5 e casa de destino com 5 ou mais peças
+        elif var_global.jog_1 and quant_ori < 5 and quant_des >= 5:
+            if var_global.pecas_posi[movimento_clara][4] == var_global.pc_clara:
+                var_global.pecas_sobre_quant[movimento_clara] += 1
+        # Jogador 2 e peças na casa de origem e destino menos de 5
+        if var_global.jog_2 and quant_ori < 5 and quant_des < 5:
+            var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_posi[movimento_escura][quant_des] = var_global.pecas_posi[movimento_escura][quant_des], var_global.pecas_posi[posi_casa][quant_ori-1]
+        # Jogador 2 e peças na casa de origem menos de 5 e casa de destino com 5 ou mais peças
+        elif var_global.jog_2 and quant_ori < 5 and quant_des >= 5:
+            if var_global.pecas_posi[movimento_escura][4] == var_global.pc_escura:
+                var_global.pecas_sobre_quant[movimento_escura] += 1
+
     # Movimento para retirar a peça do jogador
     elif movimento == 5:
-        print("5")
+        quant_ret = 0
+        if var_global.jog_1:
+            for cont in range(15):
+                if var_global.pecas_retiradas_claras[cont] == var_global.pc_clara:
+                    quant_ret += 1
+        else:
+            for cont in range(15):
+                if var_global.pecas_retiradas_escuras[cont] == var_global.pc_escura:
+                    quant_ret += 1
+
+        # Jogador 1 e peças na casa de 5 a menos
+        if var_global.jog_1 and quant_ori <= 5:
+            var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_retiradas_claras[quant_ret] = var_global.pecas_retiradas_claras[quant_ret], var_global.pecas_posi[posi_casa][quant_ori-1]
+            var_global.pecas_retiradas_claras_quant = quant_ret
+        # Jogador 1 e peças na casa de 5 a menos
+        elif var_global.jog_2 and quant_ori <= 5:
+            var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_retiradas_escuras[quant_ret] = var_global.pecas_retiradas_escuras[quant_ret], var_global.pecas_posi[posi_casa][quant_ori-1]
+            var_global.pecas_retiradas_escuras_quant = quant_ret
+
+    return
 
 ###############################################
 def jogada_dados_diff(opcao, d1, d2):
@@ -129,20 +255,24 @@ def jogada_dados_diff(opcao, d1, d2):
         # Validade das duas jogadas
         casa = casa_selecao()
         movimento[0] = jogada_validade(casa, d1)
-        if var_global.jog_1:
-            movimento[1] = jogada_validade(casa-d1, d2)
+        if movimento[0] == 2:
+            return False
         else:
-            movimento[1] = jogada_validade(casa+d1, d2)
+            if var_global.jog_1:
+                movimento[1] = jogada_validade(casa-d1, d2)
+            else:
+                movimento[1] = jogada_validade(casa+d1, d2)
         # Se um dos dois movimentos for inválido
-        if movimento[0] == 2 or movimento[1] == 2:
+        if movimento[1] == 2:
             return False
         # Se não há movimentos inválidos
         else:
-            peca_movimento(casa, movimento[0], d1, d2)
+            peca_movimento(casa, movimento[0], d1)
             if var_global.jog_1:
-                peca_movimento(casa-d1, movimento[1], d1, d2)
+                peca_movimento(casa-d1, movimento[1], d2)
             else:
-                peca_movimento(casa+d1, movimento[1], d1, d2)
+                peca_movimento(casa+d1, movimento[1], d2)
+            tabuleiro.print_tabuleiro()
             return True
 
     # Mover uma peça: usando D2 primeiro e depois D1
@@ -150,20 +280,24 @@ def jogada_dados_diff(opcao, d1, d2):
         # Validade das duas jogadas
         casa = casa_selecao()
         movimento[0] = jogada_validade(casa, d2)
-        if var_global.jog_1:
-            movimento[1] = jogada_validade(casa-d2, d1)
+        if movimento[0] == 2:
+            return False
         else:
-            movimento[1] = jogada_validade(casa+d2, d1)
+            if var_global.jog_1:
+                movimento[1] = jogada_validade(casa-d2, d1)
+            else:
+                movimento[1] = jogada_validade(casa+d2, d1)
         # Se um dos dois movimentos for inválido
-        if movimento[0] == 2 or movimento[1] == 2:
+        if movimento[1] == 2:
             return False
         # Se não há movimentos inválidos
         else:
-            peca_movimento(casa, movimento[0], d1, d2)
+            peca_movimento(casa, movimento[0], d2)
             if var_global.jog_1:
-                peca_movimento(casa-d2, movimento[1], d1, d2)
+                peca_movimento(casa-d2, movimento[1], d1)
             else:
-                peca_movimento(casa+d2, movimento[1], d1, d2)
+                peca_movimento(casa+d2, movimento[1], d1)
+            tabuleiro.print_tabuleiro()
             return True
 
     # Mover duas peças: a primeira com D1 e a segunda com D2
@@ -175,9 +309,10 @@ def jogada_dados_diff(opcao, d1, d2):
         if movimento[0] == 2:
             return False
         else:
-            peca_movimento(casa_1, movimento[0], d1, d2)
+            peca_movimento(casa_1, movimento[0], d1)
             var_global.dado_usado = 1
             var_global.cont_jogadas += 1
+            tabuleiro.print_tabuleiro()
         # Testa se a peça é a mesma. Se for, chama exceção
         while True:
             try:
@@ -192,7 +327,8 @@ def jogada_dados_diff(opcao, d1, d2):
                 elif var_global.jog_2:
                     if (casa_2 - d1) == casa_1:
                         raise ValueError
-                peca_movimento(casa_2, movimento[1], d1, d2)
+                peca_movimento(casa_2, movimento[1], d2)
+                tabuleiro.print_tabuleiro()
                 return True
             except ValueError:
                 print("\nA peça selecionada foi a mesma. Você deve selecionar outra peça.\n")
@@ -206,9 +342,10 @@ def jogada_dados_diff(opcao, d1, d2):
         if movimento[0] == 2:
             return False
         else:
-            peca_movimento(casa_1, movimento[0], d1, d2)
+            peca_movimento(casa_1, movimento[0], d2)
             var_global.dado_usado = 2
             var_global.cont_jogadas += 1
+            tabuleiro.print_tabuleiro()
         # Testa se a peça é a mesma. Se for, chama exceção
         while True:
             try:
@@ -223,7 +360,8 @@ def jogada_dados_diff(opcao, d1, d2):
                 elif var_global.jog_2:
                     if (casa_2 - d2) == casa_1:
                         raise ValueError
-                peca_movimento(casa_2, movimento[1], d1, d2)
+                peca_movimento(casa_2, movimento[1], d1)
+                tabuleiro.print_tabuleiro()
                 return True
             except ValueError:
                 print("\nA peça selecionada foi a mesma. Você deve selecionar outra peça.\n")
@@ -236,7 +374,8 @@ def jogada_dados_diff(opcao, d1, d2):
         if movimento[0] == 2:
             return False
         else:
-            peca_movimento(casa, movimento[0], d1, d2)
+            peca_movimento(casa, movimento[0], d1)
+            tabuleiro.print_tabuleiro()
             return True
 
     # Mover uma peça: usando somente D2
@@ -247,7 +386,8 @@ def jogada_dados_diff(opcao, d1, d2):
         if movimento[0] == 2:
             return False
         else:
-            peca_movimento(casa, movimento[0], d1, d2)
+            peca_movimento(casa, movimento[0], d2)
+            tabuleiro.print_tabuleiro()
             return True
 
 ###############################################
@@ -320,7 +460,7 @@ def jogada_opcoes(d1, d2):
                                 return
                 # Exceção
                 except ValueError:
-                    print("\u001b[41mOpção inválida.\u001b[0m Repita a operação.")
+                    print("\n\u001b[41mOpção inválida.\u001b[0m Repita a operação.\n")
             
             # Opção para quando há somente uma peça capturada e irá usar D1 para movimentar
             elif var_global.dado_usado == 2:

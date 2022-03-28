@@ -1,7 +1,13 @@
+"""
+Definição das variáveis globais
+"""
+
 from glob import glob
 
+from jogadas import jogada_dados_diff
+
 def init():
-    """Função para definição das variáveis globais"""
+    """Função para inicializar as variáveis globais"""
 
     # Variáveis que determina a cores das peças
     # Círculo branco
@@ -38,13 +44,25 @@ def init():
                   [pc_clara, pc_nula, pc_nula, pc_nula, pc_nula],        [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
                   [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],         [pc_escura, pc_nula, pc_nula, pc_nula, pc_nula]]
 
+    """ pecas_posi = [[pc_clara, pc_clara, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+              [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],   [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_escura, pc_escura, pc_escura, pc_escura, pc_escura],
+              [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],   [pc_escura, pc_escura, pc_escura, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+              [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],   [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_clara, pc_clara, pc_clara, pc_clara, pc_clara],
+              [pc_escura, pc_escura, pc_escura, pc_escura, pc_escura], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+              [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_clara, pc_clara, pc_clara, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+              [pc_clara, pc_clara, pc_clara, pc_clara, pc_clara], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+              [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_escura, pc_escura, pc_nula, pc_nula, pc_nula]] """
+
     # Lista das peças capturadas
     global pecas_capturadas_claras
     pecas_capturadas_claras = [pc_clara, pc_clara, pc_nula, pc_nula, pc_nula]
+    """ pecas_capturadas_claras = [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula] """
+
     global pecas_capturadas_escuras
     pecas_capturadas_escuras = [pc_escura, pc_escura, pc_nula, pc_nula, pc_nula]
+    """ pecas_capturadas_escuras = [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula] """
 
-    # Lista das peças que foram retiradas do jogo e que sinaliza o fim de jogo retirando as 15 peças
+    # Lista das peças que foram retiradas do jogo e suas variáveis que sinaliza o fim de jogo retirando as 15 peças
     global pecas_retiradas_claras
     pecas_retiradas_claras = [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula,
                               pc_nula, pc_nula, pc_nula, pc_nula, pc_nula,
@@ -54,13 +72,20 @@ def init():
                                pc_nula, pc_nula, pc_nula, pc_nula, pc_nula,
                                pc_nula, pc_nula, pc_nula, pc_nula, pc_nula]
 
-    # Lista das peças por casa
-    global pecas_por_casa
-    pecas_por_casa = [1, 0, 0, 0, 0, 5,
-                      0, 3, 0, 0, 0, 4,
-                      4, 0, 0, 0, 3, 0,
-                      4, 0, 1, 0, 0, 1]
+    global pecas_retiradas_claras_quant
+    pecas_retiradas_claras_quant = 0
+    
+    global pecas_retiradas_escuras_quant
+    pecas_retiradas_escuras_quant = 0
 
+    # Lista das peças sobrepostas por casa
+    global pecas_sobre
+    pecas_sobre = [[pc_nula]] * 24
+
+    global pecas_sobre_quant
+    pecas_sobre_quant = [1] * 24
+
+    # Variáveis da quantidade de peças na casa campo do jogador
     global pecas_casa_campo_clara
     pecas_casa_campo_clara = 0
     
@@ -90,4 +115,6 @@ def init():
 
     # Variáveis contendo os nomes dos jogadores
     global jogador_1
+    jogador_1 = ""
     global jogador_2
+    jogador_2 = ""
