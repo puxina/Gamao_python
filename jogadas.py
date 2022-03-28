@@ -481,7 +481,7 @@ def jogada_dados_igual(opcao, dado):
                     else:
                         break
                 elif var_global.jog_2:
-                    if (casa_2 - dado) == casa_1:
+                    if (casa_x[1] - dado) == casa_x[0]:
                         raise ValueError
                     else:
                         break

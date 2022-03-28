@@ -31,7 +31,7 @@ def init():
 
     # Matriz com os elementos das peças distribuídas no tabuleiro
     global  pecas_posi
-    pecas_posi = [[pc_clara, pc_nula, pc_nula, pc_nula, pc_nula],        [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+    """ pecas_posi = [[pc_clara, pc_nula, pc_nula, pc_nula, pc_nula],        [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
                   [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],         [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
                   [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],         [pc_escura, pc_escura, pc_escura, pc_escura, pc_escura],
                   [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],         [pc_escura, pc_escura, pc_escura, pc_nula, pc_nula],
@@ -42,25 +42,29 @@ def init():
                   [pc_clara, pc_clara, pc_clara, pc_nula, pc_nula],      [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
                   [pc_clara, pc_clara, pc_clara, pc_clara, pc_nula],     [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
                   [pc_clara, pc_nula, pc_nula, pc_nula, pc_nula],        [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
-                  [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],         [pc_escura, pc_nula, pc_nula, pc_nula, pc_nula]]
+                  [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],         [pc_escura, pc_nula, pc_nula, pc_nula, pc_nula]] """
 
-    """ pecas_posi = [[pc_clara, pc_clara, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
-              [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],   [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_escura, pc_escura, pc_escura, pc_escura, pc_escura],
-              [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],   [pc_escura, pc_escura, pc_escura, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
-              [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],   [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_clara, pc_clara, pc_clara, pc_clara, pc_clara],
-              [pc_escura, pc_escura, pc_escura, pc_escura, pc_escura], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
-              [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_clara, pc_clara, pc_clara, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
-              [pc_clara, pc_clara, pc_clara, pc_clara, pc_clara], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
-              [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_escura, pc_escura, pc_nula, pc_nula, pc_nula]] """
+    pecas_posi = [[pc_clara, pc_clara, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+                  [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+                  [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_escura, pc_escura, pc_escura, pc_escura, pc_escura],
+                  [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_escura, pc_escura, pc_escura, pc_nula, pc_nula],
+                  [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+                  [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_clara, pc_clara, pc_clara, pc_clara, pc_clara],
+                  [pc_escura, pc_escura, pc_escura, pc_escura, pc_escura], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+                  [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+                  [pc_clara, pc_clara, pc_clara, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+                  [pc_clara, pc_clara, pc_clara, pc_clara, pc_clara], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+                  [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula],
+                  [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula], [pc_escura, pc_escura, pc_nula, pc_nula, pc_nula]]
 
     # Lista das peças capturadas
     global pecas_capturadas_claras
-    pecas_capturadas_claras = [pc_clara, pc_clara, pc_nula, pc_nula, pc_nula]
-    """ pecas_capturadas_claras = [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula] """
+    """ pecas_capturadas_claras = [pc_clara, pc_clara, pc_nula, pc_nula, pc_nula] """
+    pecas_capturadas_claras = [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula]
 
     global pecas_capturadas_escuras
-    pecas_capturadas_escuras = [pc_escura, pc_escura, pc_nula, pc_nula, pc_nula]
-    """ pecas_capturadas_escuras = [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula] """
+    """ pecas_capturadas_escuras = [pc_escura, pc_escura, pc_nula, pc_nula, pc_nula] """
+    pecas_capturadas_escuras = [pc_nula, pc_nula, pc_nula, pc_nula, pc_nula]
 
     # Lista das peças que foram retiradas do jogo e suas variáveis que sinaliza o fim de jogo retirando as 15 peças
     global pecas_retiradas_claras
