@@ -56,7 +56,8 @@ def main():
 
     print("\n" + COR_SUBLINHADO + "Que vença o melhor entre " + var_global.jogador_1 + " e " + var_global.jogador_2 + COR_RESETALL +"\n")
 
-    tabuleiro.print_tabuleiro()
+    tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
 
     # Laço para a realização do jogo, alternando sempre entre Jogador 1 e Jogador 2
     while True:

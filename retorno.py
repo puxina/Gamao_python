@@ -170,7 +170,8 @@ def peca_capturada(d1, d2):
                 else:
                     peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
                     var_global.dado_usado = 2
-                tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[0] == 1:
                     if var_global.cont_jogadas == 2:
@@ -187,7 +188,8 @@ def peca_capturada(d1, d2):
                 input()
                 peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
                 var_global.dado_usado = 1
-                tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[0] == 1:
                     if var_global.cont_jogadas == 2:
@@ -203,7 +205,8 @@ def peca_capturada(d1, d2):
                 input()
                 peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
                 var_global.dado_usado = 2
-                tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[0] == 1:
                     if var_global.cont_jogadas == 2:
@@ -246,7 +249,8 @@ def peca_capturada(d1, d2):
                 else:
                     peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
                     var_global.dado_usado = 2
-                tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[1] == 1:
                     if var_global.cont_jogadas == 2:
@@ -263,7 +267,8 @@ def peca_capturada(d1, d2):
                 input()
                 peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
                 var_global.dado_usado = 1
-                tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[1] == 1:
                     if var_global.cont_jogadas == 2:
@@ -279,7 +284,8 @@ def peca_capturada(d1, d2):
                 input()
                 peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
                 var_global.dado_usado = 2
-                tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
                 var_global.cont_jogadas += 1
                 if pecas_capturadas[1] == 1:
                     if var_global.cont_jogadas == 2:

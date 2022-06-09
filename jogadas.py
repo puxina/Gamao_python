@@ -114,12 +114,14 @@ def jogada_validade(casa, dado):
     elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][1] == var_global.PC_ESCURA:
         print("\n" + COR_FUNDO_VERMELHO + "Jogada inválida:" + COR_RESETALL + " A opção escolhida leva sua peça\n" +
                 "para uma casa bloqueada. Tente novamente\n")
-        tabuleiro.print_tabuleiro()
+        tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
         return 2
     elif var_global.jog_2 and var_global.pecas_posi[movimento_escura][1] == var_global.PC_CLARA:
         print("\n" + COR_FUNDO_VERMELHO + "Jogada inválida:" + COR_RESETALL + " A opção escolhida leva sua peça\n" +
                 "para uma casa bloqueada. Tente novamente\n")
-        tabuleiro.print_tabuleiro()
+        tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
         return 2
     
     # Movimento de captura
@@ -273,7 +275,8 @@ def jogada_dados_diff(opcao, d1, d2):
                 peca_movimento(casa-d1, movimento[1], d2)
             else:
                 peca_movimento(casa+d1, movimento[1], d2)
-            tabuleiro.print_tabuleiro()
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
             return True
 
     # Mover uma peça: usando D2 primeiro e depois D1
@@ -298,7 +301,8 @@ def jogada_dados_diff(opcao, d1, d2):
                 peca_movimento(casa-d2, movimento[1], d1)
             else:
                 peca_movimento(casa+d2, movimento[1], d1)
-            tabuleiro.print_tabuleiro()
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
             return True
 
     # Mover duas peças: a primeira com D1 e a segunda com D2
@@ -313,7 +317,8 @@ def jogada_dados_diff(opcao, d1, d2):
             peca_movimento(casa_1, movimento[0], d1)
             var_global.dado_usado = 1
             var_global.cont_jogadas += 1
-            tabuleiro.print_tabuleiro()
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
         # Testa se a peça é a mesma. Se for, chama exceção
         while True:
             try:
@@ -329,7 +334,8 @@ def jogada_dados_diff(opcao, d1, d2):
                     if (casa_2 - d1) == casa_1:
                         raise ValueError
                 peca_movimento(casa_2, movimento[1], d2)
-                tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
                 return True
             except ValueError:
                 print("\nA peça selecionada foi a mesma. Você deve selecionar outra peça.\n")
@@ -346,7 +352,8 @@ def jogada_dados_diff(opcao, d1, d2):
             peca_movimento(casa_1, movimento[0], d2)
             var_global.dado_usado = 2
             var_global.cont_jogadas += 1
-            tabuleiro.print_tabuleiro()
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
         # Testa se a peça é a mesma. Se for, chama exceção
         while True:
             try:
@@ -362,7 +369,8 @@ def jogada_dados_diff(opcao, d1, d2):
                     if (casa_2 - d2) == casa_1:
                         raise ValueError
                 peca_movimento(casa_2, movimento[1], d1)
-                tabuleiro.print_tabuleiro()
+                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
                 return True
             except ValueError:
                 print("\nA peça selecionada foi a mesma. Você deve selecionar outra peça.\n")
@@ -376,7 +384,8 @@ def jogada_dados_diff(opcao, d1, d2):
             return False
         else:
             peca_movimento(casa, movimento[0], d1)
-            tabuleiro.print_tabuleiro()
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
             return True
 
     # Mover uma peça: usando somente D2
@@ -388,7 +397,8 @@ def jogada_dados_diff(opcao, d1, d2):
             return False
         else:
             peca_movimento(casa, movimento[0], d2)
-            tabuleiro.print_tabuleiro()
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
             return True
 
 ###############################################
@@ -421,7 +431,8 @@ def jogada_dados_igual(opcao, dado):
             for cont in range(4):
                 peca_movimento(casa_x[0]+cont*dado, movimento[cont], dado)
         
-        tabuleiro.print_tabuleiro()
+        tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
         return True
     
     # Mover duas peças: usando 2*D1 e 2*D1
@@ -456,7 +467,8 @@ def jogada_dados_igual(opcao, dado):
         
         peca_movimento(casa_x[0], movimento[0], 2*dado)
         peca_movimento(casa_x[1], movimento[1], 2*dado)
-        tabuleiro.print_tabuleiro()
+        tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
         return True
 
     # Mover duas peças: usando 3*D1 e D1
@@ -491,7 +503,8 @@ def jogada_dados_igual(opcao, dado):
 
         peca_movimento(casa_x[0], movimento[0], 3*dado)
         peca_movimento(casa_x[1], movimento[1], dado)
-        tabuleiro.print_tabuleiro()
+        tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
         return True
 
     # Mover três peças: usando 2*D1, D1 e D1
@@ -535,7 +548,8 @@ def jogada_dados_igual(opcao, dado):
         peca_movimento(casa_x[0], movimento[0], 2*dado)
         peca_movimento(casa_x[1], movimento[1], dado)
         peca_movimento(casa_x[2], movimento[2], dado)
-        tabuleiro.print_tabuleiro()
+        tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
         return True
 
     # Mover quatro peças: usando D1, D1, D1 e D1
@@ -589,7 +603,8 @@ def jogada_dados_igual(opcao, dado):
         peca_movimento(casa_x[1], movimento[1], dado)
         peca_movimento(casa_x[2], movimento[2], dado)
         peca_movimento(casa_x[3], movimento[3], dado)
-        tabuleiro.print_tabuleiro()
+        tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+
         return True
         
 
