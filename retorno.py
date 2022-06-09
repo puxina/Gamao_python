@@ -22,6 +22,7 @@ Funções:
 
 # Função escrita para o programa
 import var_global
+from def_cores import *
 import tabuleiro
 
 ###############################################
@@ -152,7 +153,7 @@ def peca_capturada(d1, d2):
             if var_global.dado_usado == 0 and dado_val[0] and dado_val[1]:
                 while True:
                     try:
-                        print("\u001b[4mO valor ou de D1 ou de D2 permite retornar a peça capturada ao tabuleiro\u001b[0m")
+                        print("\u001b[4mO valor ou de D1 ou de D2 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL)
                         dado_x = int(input("Escolha qual dado você deseja usar (1 ou 2): "))
                         if dado_x < 1 or dado_x > 2:
                             raise ValueError
@@ -160,7 +161,7 @@ def peca_capturada(d1, d2):
                             print()
                             break
                     except ValueError:
-                        print("\n\u001b[41mValor inválido.\u001b[0m Repita a operação.\n")
+                        print("\n\u001b[41mValor inválido." + COR_RESETALL + " Repita a operação.\n")
                 # Escolheu D1
                 if dado_x == 1:
                     peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
@@ -181,7 +182,7 @@ def peca_capturada(d1, d2):
                     return False
             # 2 - Somente dado 1 está apto a ser usado
             elif var_global.dado_usado != 1 and dado_val[0]:
-                print("\u001b[4mO valor de D1 permite retornar a peça capturada ao tabuleiro\u001b[0m\n" +
+                print("\u001b[4mO valor de D1 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
                 peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
@@ -197,7 +198,7 @@ def peca_capturada(d1, d2):
                     return False
             # 3 - Somente dado 2 está apto a ser usado
             elif var_global.dado_usado != 2 and dado_val[1]:
-                print("\u001b[4mO valor de D2 permite retornar a peça capturada ao tabuleiro\u001b[0m\n" +
+                print("\u001b[4mO valor de D2 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
                 peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
@@ -214,7 +215,7 @@ def peca_capturada(d1, d2):
             # 4 - Nenhum dado está apto a ser usado
             else:
                 print("\u001b[4mNenhum valor dos dados permite retornar a peça capturada ao tabuleiro\n" +
-                                "Passe a jogada =( \u001b[0m\n")
+                                "Passe a jogada =(" + COR_RESETALL + "\n")
                 return False
     # Jogador 2
     else:
@@ -228,7 +229,7 @@ def peca_capturada(d1, d2):
             if var_global.dado_usado == 0 and dado_val[0] and dado_val[1]:
                 while True:
                     try:
-                        print("\u001b[4mO valor ou de D1 ou de D2 permite retornar a peça capturada ao tabuleiro\u001b[0m")
+                        print("\u001b[4mO valor ou de D1 ou de D2 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL)
                         dado_x = int(input("Escolha qual dado você deseja usar (1 ou 2): "))
                         if dado_x < 1 or dado_x > 2:
                             raise ValueError
@@ -236,7 +237,7 @@ def peca_capturada(d1, d2):
                             print()
                             break
                     except ValueError:
-                        print("\n\u001b[41mValor inválido.\u001b[0m Repita a operação.\n")
+                        print("\n\u001b[41mValor inválido." + COR_RESETALL + " Repita a operação.\n")
                 # Escolheu D1
                 if dado_x == 1:
                     peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
@@ -257,7 +258,7 @@ def peca_capturada(d1, d2):
                     return False
             # 2 - Somente dado 1 está apto a ser usado
             elif var_global.dado_usado != 1 and dado_val[0]:
-                print("\u001b[4mO valor de D1 permite retornar a peça capturada ao tabuleiro\u001b[0m\n" +
+                print("\u001b[4mO valor de D1 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
                 peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
@@ -273,7 +274,7 @@ def peca_capturada(d1, d2):
                     return False
             # 3 - Somente dado 2 está apto a ser usado
             elif var_global.dado_usado != 2 and dado_val[1]:
-                print("\u001b[4mO valor de D2 permite retornar a peça capturada ao tabuleiro\u001b[0m\n" +
+                print("\u001b[4mO valor de D2 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
                 peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
@@ -290,5 +291,5 @@ def peca_capturada(d1, d2):
             # 4 - Nenhum dado está apto a ser usado
             else:
                 print("\u001b[4mNenhum valor dos dados permite retornar a peça capturada ao tabuleiro\n" +
-                                "Passe a jogada =( \u001b[0m\n")
+                                "Passe a jogada =(" + COR_RESETALL + "\n")
                 return False

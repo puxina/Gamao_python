@@ -14,6 +14,7 @@ import random
 
 # Função das variáveis globais
 import var_global
+from def_cores import *
 
 # Seed para geração aleatória dos números obtido do sistema Windows
 random.seed()

@@ -21,6 +21,7 @@ Funções:
 # Função das variáveis globais
 from re import T
 import var_global
+from def_cores import *
 import tabuleiro
 
 ###############################################
@@ -30,13 +31,13 @@ def casa_selecao():
             casa = int(input("Selecione a casa correspondente a peça que você deseja mover: "))
             
             if casa == 0 or casa > 24:
-                print("\n\u001b[41mValor inválido:\u001b[0m Fora da faixa de 1 até 24. Repita a operação.\n")
+                print("\n\u001b[41mValor inválido:" + COR_RESETALL + " Fora da faixa de 1 até 24. Repita a operação.\n")
             elif var_global.pecas_posi[24-casa][0] == var_global.PC_NULA:
-                print("\n\u001b[41mJogada inválida:\u001b[0m Você selecionou uma casa vazia. Tente novamente\n")
+                print("\n\u001b[41mJogada inválida:" + COR_RESETALL + " Você selecionou uma casa vazia. Tente novamente\n")
             elif var_global.jog_1 and var_global.pecas_posi[24-casa][0] == var_global.PC_ESCURA:
-                print("\n\u001b[41mJogada inválida:\u001b[0m Você selecionou a casa do adversário. Tente novamente\n")
+                print("\n\u001b[41mJogada inválida:" + COR_RESETALL + " Você selecionou a casa do adversário. Tente novamente\n")
             elif var_global.jog_2 and var_global.pecas_posi[24-casa][0] == var_global.PC_CLARA:
-                print("\n\u001b[41mJogada inválida:\u001b[0m Você selecionou a casa do adversário. Tente novamente\n")
+                print("\n\u001b[41mJogada inválida:" + COR_RESETALL + " Você selecionou a casa do adversário. Tente novamente\n")
             else:
                 return casa
 
@@ -111,12 +112,12 @@ def jogada_validade(casa, dado):
     
     # Movimento inválido se casa bloqueada
     elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][1] == var_global.PC_ESCURA:
-        print("\n\u001b[41mJogada inválida:\u001b[0m A opção escolhida leva sua peça\n" +
+        print("\n\u001b[41mJogada inválida:" + COR_RESETALL + " A opção escolhida leva sua peça\n" +
                 "para uma casa bloqueada. Tente novamente\n")
         tabuleiro.print_tabuleiro()
         return 2
     elif var_global.jog_2 and var_global.pecas_posi[movimento_escura][1] == var_global.PC_CLARA:
-        print("\n\u001b[41mJogada inválida:\u001b[0m A opção escolhida leva sua peça\n" +
+        print("\n\u001b[41mJogada inválida:" + COR_RESETALL + " A opção escolhida leva sua peça\n" +
                 "para uma casa bloqueada. Tente novamente\n")
         tabuleiro.print_tabuleiro()
         return 2
@@ -604,7 +605,7 @@ def jogada_opcoes(d1, d2):
                     print(var_global.jogador_1, end = "")
                 else:
                     print(var_global.jogador_2, end = "")
-                print(", selecione uma das opções de jogadas disponíveis abaixo:\u001b[0m\n")
+                print(", selecione uma das opções de jogadas disponíveis abaixo:" + COR_RESETALL + "\n")
                 print("1 - Mover uma peça: usando quatro vezes D1 = " + str(d1))
                 print("2 - Mover duas peças: a primeira duas vezes D1 = " + str(d1) + " e a segunda duas vezes D1 = " + str(d1))
                 print("3 - Mover duas peças: a primeira três vezes D1 = " + str(d1) + " e a segunda uma vez D1 = " + str(d1))
@@ -651,7 +652,7 @@ def jogada_opcoes(d1, d2):
                                 return
             # Exceção
             except ValueError:
-                print("\n\u001b[41mOpção inválida.\u001b[0m Repita a operação.\n")
+                print("\n\u001b[41mOpção inválida." + COR_RESETALL + " Repita a operação.\n")
     
     # Possibilidades em caso de dois dados diferentes
     else:
@@ -665,7 +666,7 @@ def jogada_opcoes(d1, d2):
                         print(var_global.jogador_1, end = "")
                     else:
                         print(var_global.jogador_2, end = "")
-                    print(", selecione uma das opções de jogadas disponíveis abaixo:\u001b[0m\n")
+                    print(", selecione uma das opções de jogadas disponíveis abaixo:" + COR_RESETALL + "\n")
                     print("1 - Mover uma peça: usando D1 = " + str(d1) + " primeiro e depois D2 = " + str(d2))
                     print("2 - Mover uma peça: usando D2 = " + str(d2) + " primeiro e depois D1 = " + str(d1))
                     print("3 - Mover duas peças: a primeira com D1 = " + str(d1) + " e a segunda com D2 = " + str(d2))
@@ -704,7 +705,7 @@ def jogada_opcoes(d1, d2):
                                 return
                 # Exceção
                 except ValueError:
-                    print("\n\u001b[41mOpção inválida.\u001b[0m Repita a operação.\n")
+                    print("\n\u001b[41mOpção inválida." + COR_RESETALL + " Repita a operação.\n")
             
             # Opção para quando há somente uma peça capturada e irá usar D1 para movimentar
             elif var_global.dado_usado == 2:
@@ -713,7 +714,7 @@ def jogada_opcoes(d1, d2):
                     print(var_global.jogador_1, end = "")
                 else:
                     print(var_global.jogador_2, end = "")
-                print(", lhe resta somente um movimento com o dado D1 = " + str(d1) + "\u001b[0m\n")
+                print(", lhe resta somente um movimento com o dado D1 = " + str(d1) + COR_RESETALL + "\n")
                 opcao = 5
                 if jogada_dados_diff(opcao, d1, d2):
                     return
@@ -728,7 +729,7 @@ def jogada_opcoes(d1, d2):
                     print(var_global.jogador_1, end = "")
                 else:
                     print(var_global.jogador_2, end = "")
-                print(", lhe resta somente um movimento com o dado D2 = " + str(d2) + "\u001b[0m\n")
+                print(", lhe resta somente um movimento com o dado D2 = " + str(d2) + COR_RESETALL + "\n")
                 opcao = 6
                 if jogada_dados_diff(opcao, d1, d2):
                     return
