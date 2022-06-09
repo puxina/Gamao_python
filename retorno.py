@@ -21,7 +21,6 @@ Funções:
 """
 
 # Função escrita para o programa
-import var_global
 from def_cores import *
 import tabuleiro
 
@@ -127,7 +126,7 @@ def peca_retorno(casa_cond, dado, pc_cap_cl, pc_cap_es, jog_1, pecas_posi, pecas
         return
 
 ###############################################
-def peca_capturada(d1, d2):
+def peca_capturada(d1, d2, dado_usado, jog_1, jog_2, cont_jogadas, pecas_posi, pecas_capturadas_claras, pecas_capturadas_escuras, pecas_retiradas_escuras, pecas_retiradas_claras, PC_CLARA, PC_ESCURA, PC_NULA, CS_CLARA, CS_ESCURA, CS_MEIO):
     """Função para determinar se há peças capturadas dos jogadores e quais valores valores de dados usará para
        o retorno da peça ao tabuleiro"""
 
@@ -136,9 +135,9 @@ def peca_capturada(d1, d2):
     casa_dx_cond = [0, 0]
 
     for cont in range(5):
-        if var_global.pecas_capturadas_claras[cont] == var_global.PC_CLARA:
+        if pecas_capturadas_claras[cont] == PC_CLARA:
             pecas_capturadas[0] += 1
-        if var_global.pecas_capturadas_escuras[cont] == var_global.PC_ESCURA:
+        if pecas_capturadas_escuras[cont] == PC_ESCURA:
             pecas_capturadas[1] += 1
 
     # Jogador 1
@@ -147,10 +146,10 @@ def peca_capturada(d1, d2):
         if pecas_capturadas[0] == 0:
             return True
         else:
-            dado_val[0], dado_val[1], casa_dx_cond[0], casa_dx_cond[1] = dado_valido(d1, d2, var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
+            dado_val[0], dado_val[1], casa_dx_cond[0], casa_dx_cond[1] = dado_valido(d1, d2, jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA)
             # Condições de retorno conforme a validade dos dados:
             # 1 - Ambos os dados podem ser usados e o usuário irá escolher qual
-            if var_global.dado_usado == 0 and dado_val[0] and dado_val[1]:
+            if dado_usado == 0 and dado_val[0] and dado_val[1]:
                 while True:
                     try:
                         print(COR_SUBLINHADO + "O valor ou de D1 ou de D2 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL)
@@ -164,52 +163,52 @@ def peca_capturada(d1, d2):
                         print("\n" + COR_FUNDO_VERMELHO + "Valor inválido." + COR_RESETALL + " Repita a operação.\n")
                 # Escolheu D1
                 if dado_x == 1:
-                    peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
-                    var_global.dado_usado = 1
+                    peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA)
+                    dado_usado = 1
                 # Escolheu D2
                 else:
-                    peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
-                    var_global.dado_usado = 2
-                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+                    peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA)
+                    dado_usado = 2
+                tabuleiro.print_tabuleiro(pecas_posi, pecas_retiradas_escuras, pecas_retiradas_claras, pecas_capturadas_escuras, pecas_capturadas_claras, CS_CLARA, CS_ESCURA, CS_MEIO)
 
-                var_global.cont_jogadas += 1
+                cont_jogadas += 1
                 if pecas_capturadas[0] == 1:
-                    if var_global.cont_jogadas == 2:
+                    if cont_jogadas == 2:
                         return False
                     else:
                         return True
                 else:
-                    peca_capturada(d1, d2)
+                    peca_capturada(d1, d2, dado_usado, jog_1, jog_2, cont_jogadas, pecas_posi, pecas_capturadas_claras, pecas_capturadas_escuras, pecas_retiradas_escuras, pecas_retiradas_claras, PC_CLARA, PC_ESCURA, PC_NULA, CS_CLARA, CS_ESCURA, CS_MEIO)
                     return False
             # 2 - Somente dado 1 está apto a ser usado
-            elif var_global.dado_usado != 1 and dado_val[0]:
+            elif dado_usado != 1 and dado_val[0]:
                 print(COR_SUBLINHADO + "O valor de D1 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
-                peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
-                var_global.dado_usado = 1
-                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+                peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA)
+                dado_usado = 1
+                tabuleiro.print_tabuleiro(pecas_posi, pecas_retiradas_escuras, pecas_retiradas_claras, pecas_capturadas_escuras, pecas_capturadas_claras, CS_CLARA, CS_ESCURA, CS_MEIO)
 
-                var_global.cont_jogadas += 1
+                cont_jogadas += 1
                 if pecas_capturadas[0] == 1:
-                    if var_global.cont_jogadas == 2:
+                    if cont_jogadas == 2:
                         return False
                     else:
                         return True
                 else:
                     return False
             # 3 - Somente dado 2 está apto a ser usado
-            elif var_global.dado_usado != 2 and dado_val[1]:
+            elif dado_usado != 2 and dado_val[1]:
                 print(COR_SUBLINHADO + "O valor de D2 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
-                peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
-                var_global.dado_usado = 2
-                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+                peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA)
+                dado_usado = 2
+                tabuleiro.print_tabuleiro(pecas_posi, pecas_retiradas_escuras, pecas_retiradas_claras, pecas_capturadas_escuras, pecas_capturadas_claras, CS_CLARA, CS_ESCURA, CS_MEIO)
 
-                var_global.cont_jogadas += 1
+                cont_jogadas += 1
                 if pecas_capturadas[0] == 1:
-                    if var_global.cont_jogadas == 2:
+                    if cont_jogadas == 2:
                         return False
                     else:
                         return True
@@ -226,10 +225,10 @@ def peca_capturada(d1, d2):
         if pecas_capturadas[1] == 0:
             return True
         else:
-            dado_val[0], dado_val[1], casa_dx_cond[0], casa_dx_cond[1] = dado_valido(d1, d2, var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
+            dado_val[0], dado_val[1], casa_dx_cond[0], casa_dx_cond[1] = dado_valido(d1, d2, jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA)
             # Condições de retorno conforme a validade dos dados:
             # 1 - Ambos os dados podem ser usados e o usuário irá escolher qual
-            if var_global.dado_usado == 0 and dado_val[0] and dado_val[1]:
+            if dado_usado == 0 and dado_val[0] and dado_val[1]:
                 while True:
                     try:
                         print(COR_SUBLINHADO + "O valor ou de D1 ou de D2 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL)
@@ -243,52 +242,52 @@ def peca_capturada(d1, d2):
                         print("\n" + COR_FUNDO_VERMELHO + "Valor inválido." + COR_RESETALL + " Repita a operação.\n")
                 # Escolheu D1
                 if dado_x == 1:
-                    peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
-                    var_global.dado_usado = 1
+                    peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA)
+                    dado_usado = 1
                 # Escolheu D2
                 else:
-                    peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
-                    var_global.dado_usado = 2
-                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+                    peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA)
+                    dado_usado = 2
+                tabuleiro.print_tabuleiro(pecas_posi, pecas_retiradas_escuras, pecas_retiradas_claras, pecas_capturadas_escuras, pecas_capturadas_claras, CS_CLARA, CS_ESCURA, CS_MEIO)
 
-                var_global.cont_jogadas += 1
+                cont_jogadas += 1
                 if pecas_capturadas[1] == 1:
-                    if var_global.cont_jogadas == 2:
+                    if cont_jogadas == 2:
                         return False
                     else:
                         return True
                 else:
-                    peca_capturada(d1, d2)
+                    peca_capturada(d1, d2, dado_usado, jog_1, jog_2, cont_jogadas, pecas_posi, pecas_capturadas_claras, pecas_capturadas_escuras, pecas_retiradas_escuras, pecas_retiradas_claras, PC_CLARA, PC_ESCURA, PC_NULA, CS_CLARA, CS_ESCURA, CS_MEIO)
                     return False
             # 2 - Somente dado 1 está apto a ser usado
-            elif var_global.dado_usado != 1 and dado_val[0]:
+            elif dado_usado != 1 and dado_val[0]:
                 print(COR_SUBLINHADO + "O valor de D1 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
-                peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
-                var_global.dado_usado = 1
-                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+                peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA)
+                dado_usado = 1
+                tabuleiro.print_tabuleiro(pecas_posi, pecas_retiradas_escuras, pecas_retiradas_claras, pecas_capturadas_escuras, pecas_capturadas_claras, CS_CLARA, CS_ESCURA, CS_MEIO)
 
-                var_global.cont_jogadas += 1
+                cont_jogadas += 1
                 if pecas_capturadas[1] == 1:
-                    if var_global.cont_jogadas == 2:
+                    if cont_jogadas == 2:
                         return False
                     else:
                         return True
                 else:
                     return False
             # 3 - Somente dado 2 está apto a ser usado
-            elif var_global.dado_usado != 2 and dado_val[1]:
+            elif dado_usado != 2 and dado_val[1]:
                 print(COR_SUBLINHADO + "O valor de D2 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
-                peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
-                var_global.dado_usado = 2
-                tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
+                peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA)
+                dado_usado = 2
+                tabuleiro.print_tabuleiro(pecas_posi, pecas_retiradas_escuras, pecas_retiradas_claras, pecas_capturadas_escuras, pecas_capturadas_claras, CS_CLARA, CS_ESCURA, CS_MEIO)
 
-                var_global.cont_jogadas += 1
+                cont_jogadas += 1
                 if pecas_capturadas[1] == 1:
-                    if var_global.cont_jogadas == 2:
+                    if cont_jogadas == 2:
                         return False
                     else:
                         return True

@@ -66,7 +66,7 @@ def main():
             var_global.dado_1, var_global.dado_2 = dado_lancamento.rola_dado(var_global.jogador_1)
             var_global.dado_usado = 0
             var_global.cont_jogadas = 0
-            if retorno.peca_capturada(var_global.dado_1, var_global.dado_2):
+            if retorno.peca_capturada(var_global.dado_1, var_global.dado_2, var_global.dado_usado, var_global.jog_1, var_global.jog_2, var_global.cont_jogadas, var_global.pecas_posi, var_global.pecas_capturadas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO):
                 jogadas.jogada_opcoes(var_global.dado_1, var_global.dado_2)
             if var_global.pecas_retiradas_claras_quant == 15:
                 break
@@ -78,7 +78,7 @@ def main():
             var_global.dado_1, var_global.dado_2 = dado_lancamento.rola_dado(var_global.jogador_2)
             var_global.dado_usado = 0
             var_global.cont_jogadas = 0
-            if retorno.peca_capturada(var_global.dado_1, var_global.dado_2):
+            if retorno.peca_capturada(var_global.dado_1, var_global.dado_2, var_global.dado_usado, var_global.jog_1, var_global.jog_2, var_global.cont_jogadas, var_global.pecas_posi, var_global.pecas_capturadas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO):
                 jogadas.jogada_opcoes(var_global.dado_1, var_global.dado_2)
             if var_global.pecas_retiradas_escuras_quant == 15:
                 break
