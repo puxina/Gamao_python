@@ -161,7 +161,7 @@ def peca_capturada(d1, d2):
                             print()
                             break
                     except ValueError:
-                        print("\n\u001b[41mValor inválido." + COR_RESETALL + " Repita a operação.\n")
+                        print("\n" + COR_FUNDO_VERMELHO + "Valor inválido." + COR_RESETALL + " Repita a operação.\n")
                 # Escolheu D1
                 if dado_x == 1:
                     peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
@@ -237,7 +237,7 @@ def peca_capturada(d1, d2):
                             print()
                             break
                     except ValueError:
-                        print("\n\u001b[41mValor inválido." + COR_RESETALL + " Repita a operação.\n")
+                        print("\n" + COR_FUNDO_VERMELHO + "Valor inválido." + COR_RESETALL + " Repita a operação.\n")
                 # Escolheu D1
                 if dado_x == 1:
                     peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
