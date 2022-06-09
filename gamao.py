@@ -63,7 +63,7 @@ def main():
     while True:
         # Jogador 1
         while var_global.jog_1:
-            dado_lancamento.rola_dado(var_global.jogador_1)
+            var_global.dado_1, var_global.dado_2 = dado_lancamento.rola_dado(var_global.jogador_1)
             var_global.dado_usado = 0
             var_global.cont_jogadas = 0
             if retorno.peca_capturada(var_global.dado_1, var_global.dado_2):
@@ -75,7 +75,7 @@ def main():
                 var_global.jog_2 = True
         #Jogador 2
         while var_global.jog_2:
-            dado_lancamento.rola_dado(var_global.jogador_2)
+            var_global.dado_1, var_global.dado_2 = dado_lancamento.rola_dado(var_global.jogador_2)
             var_global.dado_usado = 0
             var_global.cont_jogadas = 0
             if retorno.peca_capturada(var_global.dado_1, var_global.dado_2):

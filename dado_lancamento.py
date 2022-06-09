@@ -12,8 +12,6 @@ Funções:
 # Funções do Pyhon
 import random
 
-# Função das variáveis globais
-import var_global
 from def_cores import *
 
 # Seed para geração aleatória dos números obtido do sistema Windows
@@ -69,7 +67,7 @@ def rola_dado(jogador):
     print(jogador + ", aperte enter para rolar os dados:")
     input()
     
-    var_global.dado_1 = random.randint(1, 6)
-    var_global.dado_2 = random.randint(1, 6)
-    print("Resultado dos dados: D1 =", var_global.dado_1, "D2 =", var_global.dado_2, "\n")
-    return
+    dado_1 = random.randint(1, 6)
+    dado_2 = random.randint(1, 6)
+    print("Resultado dos dados: D1 =", dado_1, "D2 =", dado_2, "\n")
+    return dado_1, dado_2
