@@ -26,7 +26,7 @@ from def_cores import *
 import tabuleiro
 
 ###############################################
-def dado_valido(d1, d2):
+def dado_valido(d1, d2, jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA):
     """Verificação de quais dados são válidos para retornar a peça ao tabuleiro, conforme
        três possíveis condições de retorno: casa vazia, captura do oponente e casa com
        peças do jogador"""
@@ -36,7 +36,7 @@ def dado_valido(d1, d2):
     casa_d2_cond = 0
     for cont in range(6):
         # Jogador 1 e Condição 1: Dado válido para retorno se a casa for vazia
-        if var_global.jog_1 and var_global.pecas_posi[cont][0] == var_global.PC_NULA:
+        if jog_1 and pecas_posi[cont][0] == PC_NULA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 1
@@ -44,7 +44,7 @@ def dado_valido(d1, d2):
                 d2_val = True
                 casa_d2_cond = 1
         # Jogador 2 e Condição 1:: Dado válido para retorno se a casa for vazia
-        elif var_global.jog_2 and var_global.pecas_posi[23-cont][0] == var_global.PC_NULA:
+        elif jog_2 and pecas_posi[23-cont][0] == PC_NULA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 1
@@ -53,7 +53,7 @@ def dado_valido(d1, d2):
                 casa_d2_cond = 1
         # Jogador 1 e Condição 2: Dado válido para retorno se a casa somente tiver uma
         # peça adversária, a qual será capturada
-        elif var_global.jog_1 and var_global.pecas_posi[cont][0] == var_global.PC_ESCURA and var_global.pecas_posi[cont][1] == var_global.PC_NULA:
+        elif jog_1 and pecas_posi[cont][0] == PC_ESCURA and pecas_posi[cont][1] == PC_NULA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 2
@@ -62,7 +62,7 @@ def dado_valido(d1, d2):
                 casa_d2_cond = 2
         # Jogador 2 e Condição 2: Dado válido para retorno se a casa somente tiver uma
         # peça adversária, a qual será capturada
-        elif var_global.jog_2 and var_global.pecas_posi[23-cont][0] == var_global.PC_CLARA and var_global.pecas_posi[23-cont][1] == var_global.PC_NULA:
+        elif jog_2 and pecas_posi[23-cont][0] == PC_CLARA and pecas_posi[23-cont][1] == PC_NULA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 2
@@ -70,7 +70,7 @@ def dado_valido(d1, d2):
                 d2_val = True
                 casa_d2_cond = 2
         # Jogador 1 e Condição 3: Dado válido para retorno em uma casa que contém peças suas (brancas)
-        elif var_global.jog_1 and var_global.pecas_posi[cont][0] == var_global.PC_CLARA:
+        elif jog_1 and pecas_posi[cont][0] == PC_CLARA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 3
@@ -78,7 +78,7 @@ def dado_valido(d1, d2):
                 d2_val = True
                 casa_d2_cond = 3
         # Jogador 2 e Condição 3: Dado válido para retorno em uma casa que contém peças suas (pretas)
-        elif var_global.jog_2 and var_global.pecas_posi[23-cont][0] == var_global.PC_ESCURA:
+        elif jog_2 and pecas_posi[23-cont][0] == PC_ESCURA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 3
@@ -147,7 +147,7 @@ def peca_capturada(d1, d2):
         if pecas_capturadas[0] == 0:
             return True
         else:
-            dado_val[0], dado_val[1], casa_dx_cond[0], casa_dx_cond[1] = dado_valido(d1, d2)
+            dado_val[0], dado_val[1], casa_dx_cond[0], casa_dx_cond[1] = dado_valido(d1, d2, var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
             # Condições de retorno conforme a validade dos dados:
             # 1 - Ambos os dados podem ser usados e o usuário irá escolher qual
             if var_global.dado_usado == 0 and dado_val[0] and dado_val[1]:
@@ -226,7 +226,7 @@ def peca_capturada(d1, d2):
         if pecas_capturadas[1] == 0:
             return True
         else:
-            dado_val[0], dado_val[1], casa_dx_cond[0], casa_dx_cond[1] = dado_valido(d1, d2)
+            dado_val[0], dado_val[1], casa_dx_cond[0], casa_dx_cond[1] = dado_valido(d1, d2, var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
             # Condições de retorno conforme a validade dos dados:
             # 1 - Ambos os dados podem ser usados e o usuário irá escolher qual
             if var_global.dado_usado == 0 and dado_val[0] and dado_val[1]:
