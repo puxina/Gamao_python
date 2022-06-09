@@ -35,7 +35,7 @@ def dado_valido(d1, d2):
     casa_d2_cond = 0
     for cont in range(6):
         # Jogador 1 e Condição 1: Dado válido para retorno se a casa for vazia
-        if var_global.jog_1 and var_global.pecas_posi[cont][0] == var_global.pc_nula:
+        if var_global.jog_1 and var_global.pecas_posi[cont][0] == var_global.PC_NULA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 1
@@ -43,7 +43,7 @@ def dado_valido(d1, d2):
                 d2_val = True
                 casa_d2_cond = 1
         # Jogador 2 e Condição 1:: Dado válido para retorno se a casa for vazia
-        elif var_global.jog_2 and var_global.pecas_posi[23-cont][0] == var_global.pc_nula:
+        elif var_global.jog_2 and var_global.pecas_posi[23-cont][0] == var_global.PC_NULA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 1
@@ -52,7 +52,7 @@ def dado_valido(d1, d2):
                 casa_d2_cond = 1
         # Jogador 1 e Condição 2: Dado válido para retorno se a casa somente tiver uma
         # peça adversária, a qual será capturada
-        elif var_global.jog_1 and var_global.pecas_posi[cont][0] == var_global.pc_escura and var_global.pecas_posi[cont][1] == var_global.pc_nula:
+        elif var_global.jog_1 and var_global.pecas_posi[cont][0] == var_global.PC_ESCURA and var_global.pecas_posi[cont][1] == var_global.PC_NULA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 2
@@ -61,7 +61,7 @@ def dado_valido(d1, d2):
                 casa_d2_cond = 2
         # Jogador 2 e Condição 2: Dado válido para retorno se a casa somente tiver uma
         # peça adversária, a qual será capturada
-        elif var_global.jog_2 and var_global.pecas_posi[23-cont][0] == var_global.pc_clara and var_global.pecas_posi[23-cont][1] == var_global.pc_nula:
+        elif var_global.jog_2 and var_global.pecas_posi[23-cont][0] == var_global.PC_CLARA and var_global.pecas_posi[23-cont][1] == var_global.PC_NULA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 2
@@ -69,7 +69,7 @@ def dado_valido(d1, d2):
                 d2_val = True
                 casa_d2_cond = 2
         # Jogador 1 e Condição 3: Dado válido para retorno em uma casa que contém peças suas (brancas)
-        elif var_global.jog_1 and var_global.pecas_posi[cont][0] == var_global.pc_clara:
+        elif var_global.jog_1 and var_global.pecas_posi[cont][0] == var_global.PC_CLARA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 3
@@ -77,7 +77,7 @@ def dado_valido(d1, d2):
                 d2_val = True
                 casa_d2_cond = 3
         # Jogador 2 e Condição 3: Dado válido para retorno em uma casa que contém peças suas (pretas)
-        elif var_global.jog_2 and var_global.pecas_posi[23-cont][0] == var_global.pc_escura:
+        elif var_global.jog_2 and var_global.pecas_posi[23-cont][0] == var_global.PC_ESCURA:
             if d1 == (cont+1):
                 d1_val = True
                 casa_d1_cond = 3
@@ -103,7 +103,7 @@ def peca_retorno(casa_cond, dado, pc_cap_cl, pc_cap_es):
         # Dado válido para retorno em uma casa que contém peças suas (brancas)
         elif casa_cond == 3:
             for cont in range(len(var_global.pecas_posi[dado-1])):
-                if var_global.pecas_posi[dado-1][cont] == var_global.pc_clara:
+                if var_global.pecas_posi[dado-1][cont] == var_global.PC_CLARA:
                     pecas_casa += 1
             var_global.pecas_posi[dado-1][pecas_casa], var_global.pecas_capturadas_claras[pc_cap_cl-1] = var_global.pecas_capturadas_claras[pc_cap_cl-1], var_global.pecas_posi[dado-1][pecas_casa]
         return
@@ -120,7 +120,7 @@ def peca_retorno(casa_cond, dado, pc_cap_cl, pc_cap_es):
         # Dado válido para retorno em uma casa que contém peças suas (brancas)
         elif casa_cond == 3:
             for cont in range(len(var_global.pecas_posi[dado-1])):
-                if var_global.pecas_posi[24-dado][cont] == var_global.pc_escura:
+                if var_global.pecas_posi[24-dado][cont] == var_global.PC_ESCURA:
                     pecas_casa += 1
             var_global.pecas_posi[24-dado][pecas_casa], var_global.pecas_capturadas_escuras[pc_cap_es-1] = var_global.pecas_capturadas_escuras[pc_cap_es-1], var_global.pecas_posi[24-dado][pecas_casa]
         return
@@ -135,9 +135,9 @@ def peca_capturada(d1, d2):
     casa_dx_cond = [0, 0]
 
     for cont in range(5):
-        if var_global.pecas_capturadas_claras[cont] == var_global.pc_clara:
+        if var_global.pecas_capturadas_claras[cont] == var_global.PC_CLARA:
             pecas_capturadas[0] += 1
-        if var_global.pecas_capturadas_escuras[cont] == var_global.pc_escura:
+        if var_global.pecas_capturadas_escuras[cont] == var_global.PC_ESCURA:
             pecas_capturadas[1] += 1
 
     # Jogador 1

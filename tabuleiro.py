@@ -28,19 +28,19 @@ def print_tabuleiro():
         # Lado esquerdo
         for coluna in range(6):
             if coluna % 2 == 0:
-                print(var_global.cs_clara + "\u001b[48;5;12m " + var_global.pecas_posi[coluna][linha] + " \u001b[0m" + var_global.cs_clara, end = '')
+                print(var_global.CS_CLARA + "\u001b[48;5;12m " + var_global.pecas_posi[coluna][linha] + " \u001b[0m" + var_global.CS_CLARA, end = '')
             else:
-                print(var_global.cs_escura + "\u001b[48;5;9m " + var_global.pecas_posi[coluna][linha] + " \u001b[0m" + var_global.cs_escura, end = '')
+                print(var_global.CS_ESCURA + "\u001b[48;5;9m " + var_global.pecas_posi[coluna][linha] + " \u001b[0m" + var_global.CS_ESCURA, end = '')
         
         # Meio do tabuleiro para as peças claras capturadas
-        print(var_global.cs_meio + "\u001b[42;1m " + var_global.pecas_capturadas_claras[linha] + " \u001b[0m" + var_global.cs_meio, end = '')
+        print(var_global.CS_MEIO + "\u001b[42;1m " + var_global.pecas_capturadas_claras[linha] + " \u001b[0m" + var_global.CS_MEIO, end = '')
         
         # Lado direito
         for coluna in range(6, 12):
             if coluna % 2 == 0:
-                print(var_global.cs_clara + "\u001b[48;5;12m " + var_global.pecas_posi[coluna][linha] + " \u001b[0m" + var_global.cs_clara, end = '')
+                print(var_global.CS_CLARA + "\u001b[48;5;12m " + var_global.pecas_posi[coluna][linha] + " \u001b[0m" + var_global.CS_CLARA, end = '')
             else:
-                print(var_global.cs_escura + "\u001b[48;5;9m " + var_global.pecas_posi[coluna][linha] + " \u001b[0m" + var_global.cs_escura, end = '')
+                print(var_global.CS_ESCURA + "\u001b[48;5;9m " + var_global.pecas_posi[coluna][linha] + " \u001b[0m" + var_global.CS_ESCURA, end = '')
         print()
     print()
 
@@ -50,18 +50,18 @@ def print_tabuleiro():
         # Lado esquerdo
         for coluna in range(23, 17, -1):
             if coluna % 2 == 0:
-                print(var_global.cs_clara + "\u001b[48;5;12m " + var_global.pecas_posi[coluna][linha-1] + " \u001b[0m" + var_global.cs_clara, end = '')
+                print(var_global.CS_CLARA + "\u001b[48;5;12m " + var_global.pecas_posi[coluna][linha-1] + " \u001b[0m" + var_global.CS_CLARA, end = '')
             else:
-                print(var_global.cs_escura + "\u001b[48;5;9m " + var_global.pecas_posi[coluna][linha-1] + " \u001b[0m" + var_global.cs_escura, end = '')
+                print(var_global.CS_ESCURA + "\u001b[48;5;9m " + var_global.pecas_posi[coluna][linha-1] + " \u001b[0m" + var_global.CS_ESCURA, end = '')
         
         # Meio do tabuleiro para as peças escuras capturadas
-        print(var_global.cs_meio + "\u001b[42;1m " + var_global.pecas_capturadas_escuras[linha-1] + " \u001b[0m" + var_global.cs_meio, end = '')
+        print(var_global.CS_MEIO + "\u001b[42;1m " + var_global.pecas_capturadas_escuras[linha-1] + " \u001b[0m" + var_global.CS_MEIO, end = '')
         
         # Lado direito
         for coluna in range(17, 11, -1):
             if coluna % 2 == 0:
-                print(var_global.cs_clara + "\u001b[48;5;12m " + var_global.pecas_posi[coluna][linha-1] + " \u001b[0m" + var_global.cs_clara, end = '')
+                print(var_global.CS_CLARA + "\u001b[48;5;12m " + var_global.pecas_posi[coluna][linha-1] + " \u001b[0m" + var_global.CS_CLARA, end = '')
             else:
-                print(var_global.cs_escura + "\u001b[48;5;9m " + var_global.pecas_posi[coluna][linha-1] + " \u001b[0m" + var_global.cs_escura, end = '')
+                print(var_global.CS_ESCURA + "\u001b[48;5;9m " + var_global.pecas_posi[coluna][linha-1] + " \u001b[0m" + var_global.CS_ESCURA, end = '')
         print()
     print("\u001b[1m     01   02   03   04   05   06        07   08   09   10   11   12\u001b[0m\n")
