@@ -88,42 +88,42 @@ def dado_valido(d1, d2, jog_1, jog_2, pecas_posi, PC_NULA, PC_ESCURA, PC_CLARA):
     return d1_val, d2_val, casa_d1_cond, casa_d2_cond
 
 ###############################################
-def peca_retorno(casa_cond, dado, pc_cap_cl, pc_cap_es):
+def peca_retorno(casa_cond, dado, pc_cap_cl, pc_cap_es, jog_1, pecas_posi, pecas_capturadas_claras, pecas_capturadas_escuras, PC_CLARA, PC_ESCURA):
     """Função para permutar a peça que será retornada ao tabuleiro, conforme a condição possível"""
     pecas_casa = 0
     # Se jogador 1
-    if var_global.jog_1:
+    if jog_1:
         # Dado válido para retorno se a casa for vazia
         if casa_cond == 1:
-            var_global.pecas_posi[dado-1][0], var_global.pecas_capturadas_claras[pc_cap_cl-1] = var_global.pecas_capturadas_claras[pc_cap_cl-1], var_global.pecas_posi[dado-1][0]
+            pecas_posi[dado-1][0], pecas_capturadas_claras[pc_cap_cl-1] = pecas_capturadas_claras[pc_cap_cl-1], pecas_posi[dado-1][0]
         # Dado válido para retorno se a casa somente tiver uma peça adversária,
         # a qual será capturada
         elif casa_cond == 2:
-            var_global.pecas_posi[dado-1][0], var_global.pecas_capturadas_escuras[pc_cap_es] = var_global.pecas_capturadas_escuras[pc_cap_es], var_global.pecas_posi[dado-1][0]
-            var_global.pecas_posi[dado-1][0], var_global.pecas_capturadas_claras[pc_cap_cl-1] = var_global.pecas_capturadas_claras[pc_cap_cl-1], var_global.pecas_posi[dado-1][0]
+            pecas_posi[dado-1][0], pecas_capturadas_escuras[pc_cap_es] = pecas_capturadas_escuras[pc_cap_es], pecas_posi[dado-1][0]
+            pecas_posi[dado-1][0], pecas_capturadas_claras[pc_cap_cl-1] = pecas_capturadas_claras[pc_cap_cl-1], pecas_posi[dado-1][0]
         # Dado válido para retorno em uma casa que contém peças suas (brancas)
         elif casa_cond == 3:
-            for cont in range(len(var_global.pecas_posi[dado-1])):
-                if var_global.pecas_posi[dado-1][cont] == var_global.PC_CLARA:
+            for cont in range(len(pecas_posi[dado-1])):
+                if pecas_posi[dado-1][cont] == PC_CLARA:
                     pecas_casa += 1
-            var_global.pecas_posi[dado-1][pecas_casa], var_global.pecas_capturadas_claras[pc_cap_cl-1] = var_global.pecas_capturadas_claras[pc_cap_cl-1], var_global.pecas_posi[dado-1][pecas_casa]
+            pecas_posi[dado-1][pecas_casa], pecas_capturadas_claras[pc_cap_cl-1] = pecas_capturadas_claras[pc_cap_cl-1], pecas_posi[dado-1][pecas_casa]
         return
     # Jogador 2
     else:
         # Dado válido para retorno se a casa for vazia
         if casa_cond == 1:
-            var_global.pecas_posi[24-dado][0], var_global.pecas_capturadas_escuras[pc_cap_es-1] = var_global.pecas_capturadas_escuras[pc_cap_es-1], var_global.pecas_posi[24-dado][0]
+            pecas_posi[24-dado][0], pecas_capturadas_escuras[pc_cap_es-1] = pecas_capturadas_escuras[pc_cap_es-1], pecas_posi[24-dado][0]
         # Dado válido para retorno se a casa somente tiver uma peça adversária,
         # a qual será capturada
         elif casa_cond == 2:
-            var_global.pecas_posi[24-dado][0], var_global.pecas_capturadas_claras[pc_cap_cl] = var_global.pecas_capturadas_claras[pc_cap_cl], var_global.pecas_posi[24-dado][0]
-            var_global.pecas_posi[24-dado][0], var_global.pecas_capturadas_escuras[pc_cap_es-1] = var_global.pecas_capturadas_escuras[pc_cap_es-1], var_global.pecas_posi[24-dado][0]
+            pecas_posi[24-dado][0], pecas_capturadas_claras[pc_cap_cl] = pecas_capturadas_claras[pc_cap_cl], pecas_posi[24-dado][0]
+            pecas_posi[24-dado][0], pecas_capturadas_escuras[pc_cap_es-1] = pecas_capturadas_escuras[pc_cap_es-1], pecas_posi[24-dado][0]
         # Dado válido para retorno em uma casa que contém peças suas (brancas)
         elif casa_cond == 3:
-            for cont in range(len(var_global.pecas_posi[dado-1])):
-                if var_global.pecas_posi[24-dado][cont] == var_global.PC_ESCURA:
+            for cont in range(len(pecas_posi[dado-1])):
+                if pecas_posi[24-dado][cont] == PC_ESCURA:
                     pecas_casa += 1
-            var_global.pecas_posi[24-dado][pecas_casa], var_global.pecas_capturadas_escuras[pc_cap_es-1] = var_global.pecas_capturadas_escuras[pc_cap_es-1], var_global.pecas_posi[24-dado][pecas_casa]
+            pecas_posi[24-dado][pecas_casa], pecas_capturadas_escuras[pc_cap_es-1] = pecas_capturadas_escuras[pc_cap_es-1], pecas_posi[24-dado][pecas_casa]
         return
 
 ###############################################
@@ -142,7 +142,7 @@ def peca_capturada(d1, d2):
             pecas_capturadas[1] += 1
 
     # Jogador 1
-    if var_global.jog_1:
+    if jog_1:
         # Teste das condições 
         if pecas_capturadas[0] == 0:
             return True
@@ -164,11 +164,11 @@ def peca_capturada(d1, d2):
                         print("\n" + COR_FUNDO_VERMELHO + "Valor inválido." + COR_RESETALL + " Repita a operação.\n")
                 # Escolheu D1
                 if dado_x == 1:
-                    peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
+                    peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
                     var_global.dado_usado = 1
                 # Escolheu D2
                 else:
-                    peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
+                    peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
                     var_global.dado_usado = 2
                 tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
 
@@ -186,7 +186,7 @@ def peca_capturada(d1, d2):
                 print(COR_SUBLINHADO + "O valor de D1 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
-                peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
+                peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
                 var_global.dado_usado = 1
                 tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
 
@@ -203,7 +203,7 @@ def peca_capturada(d1, d2):
                 print(COR_SUBLINHADO + "O valor de D2 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
-                peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
+                peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
                 var_global.dado_usado = 2
                 tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
 
@@ -243,11 +243,11 @@ def peca_capturada(d1, d2):
                         print("\n" + COR_FUNDO_VERMELHO + "Valor inválido." + COR_RESETALL + " Repita a operação.\n")
                 # Escolheu D1
                 if dado_x == 1:
-                    peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
+                    peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
                     var_global.dado_usado = 1
                 # Escolheu D2
                 else:
-                    peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
+                    peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
                     var_global.dado_usado = 2
                 tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
 
@@ -265,7 +265,7 @@ def peca_capturada(d1, d2):
                 print(COR_SUBLINHADO + "O valor de D1 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
-                peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1])
+                peca_retorno(casa_dx_cond[0], d1, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
                 var_global.dado_usado = 1
                 tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
 
@@ -282,7 +282,7 @@ def peca_capturada(d1, d2):
                 print(COR_SUBLINHADO + "O valor de D2 permite retornar a peça capturada ao tabuleiro" + COR_RESETALL + "\n" +
                       "Pressione enter para realizar a jogada: ")
                 input()
-                peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1])
+                peca_retorno(casa_dx_cond[1], d2, pecas_capturadas[0], pecas_capturadas[1], var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_NULA, var_global.PC_ESCURA, var_global.PC_CLARA)
                 var_global.dado_usado = 2
                 tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
 
