@@ -14,9 +14,6 @@ def main():
     import dado_lancamento
     import jogadas
 
-    # Chamada das variáreis globais com inicialização dos valores
-    var_global.init()
-
     # Desenvolvimento do jogo    
     print(COR_NEGRITO + COR_FUNDO_CIANO + " Bem vindo ao jogo do gamão "+ COR_RESETALL +"\n")
 
