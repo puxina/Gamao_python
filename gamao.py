@@ -18,10 +18,10 @@ def main():
     var_global.init()
 
     # Desenvolvimento do jogo    
-    print("\u001b[1m\u001b[46;1m Bem vindo ao jogo do gamão "+ COR_RESETALL +"\n")
+    print(COR_NEGRITO + COR_FUNDO_CIANO + " Bem vindo ao jogo do gamão "+ COR_RESETALL +"\n")
 
     # Seleção do primeiro jogador, o qual terá as peças claras (brancas)
-    print("\u001b[4mEscolha um entre os dois jogadores para lançar primeiro o dado.\n" + \
+    print(COR_SUBLINHADO + "Escolha um entre os dois jogadores para lançar primeiro o dado.\n" + \
                     "Aquele que obtiver o maior número será o primeiro jogador"+ COR_RESETALL +"\n")
     while True:
         print("Pressione enter para a rolagem do dado:", end = '')
@@ -33,12 +33,12 @@ def main():
         var_global.dado_2 = dado_lancamento.print_dado()
         
         if var_global.dado_1 == var_global.dado_2:
-            print("\u001b[4mEmpate nos dados. Repita o lançamento"+ COR_RESETALL +"\n")
+            print(COR_SUBLINHADO + "Empate nos dados. Repita o lançamento"+ COR_RESETALL +"\n")
         else:
             break
 
     # Obtenção do nome do primeiro jogador
-    print("\u001b[4mA pessoa que jogou o dado e que teve o maior valor será o\n"
+    print(COR_SUBLINHADO + "A pessoa que jogou o dado e que teve o maior valor será o\n"
                 + "primeiro jogador e jogará com as peças brancas"+ COR_RESETALL)
     while True:
         var_global.jogador_1 = input("\nJogador 1, entre com seu nome: ")
@@ -48,7 +48,7 @@ def main():
             print("Nome não digitado")
 
     # Obtenção do nome do segundo jogador
-    print("\n\u001b[4mA pessoa que jogou o dado e que teve o menor valor será o\n"
+    print("\n" + COR_SUBLINHADO + "A pessoa que jogou o dado e que teve o menor valor será o\n"
                 + "segundo jogador e jogará com as peças pretas"+ COR_RESETALL)
     while True:
         var_global.jogador_2 = input("\nJogador 2, entre com seu nome: ")
@@ -57,7 +57,7 @@ def main():
         else:
             print("Nome não digitado")
 
-    print("\n\u001b[4mQue vença o melhor entre " + var_global.jogador_1 + " e " + var_global.jogador_2 + COR_RESETALL +"\n")
+    print("\n" + COR_SUBLINHADO + "Que vença o melhor entre " + var_global.jogador_1 + " e " + var_global.jogador_2 + COR_RESETALL +"\n")
 
     tabuleiro.print_tabuleiro()
 

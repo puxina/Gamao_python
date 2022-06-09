@@ -22,10 +22,10 @@ def print_tabuleiro():
         print(var_global.pecas_retiradas_claras[cont], end = ' ')
     print(COR_RESETALL + "\n")
 
-    print("\u001b[1m     24   23   22   21   20   19        18   17   16   15   14   13" + COR_RESETALL)
+    print(COR_NEGRITO + "     24   23   22   21   20   19        18   17   16   15   14   13" + COR_RESETALL)
     # Topo do tabuleiro
     for linha in range(5):
-        print("\u001b[1m", linha+1, COR_RESETALL, end = '')
+        print(COR_NEGRITO, linha+1, COR_RESETALL, end = '')
         # Lado esquerdo
         for coluna in range(6):
             if coluna % 2 == 0:
@@ -47,7 +47,7 @@ def print_tabuleiro():
 
     # Inferior do tabuleiro
     for linha in range(5, 0, -1):
-        print("\u001b[1m", linha, COR_RESETALL, end = '')
+        print(COR_NEGRITO, linha, COR_RESETALL, end = '')
         # Lado esquerdo
         for coluna in range(23, 17, -1):
             if coluna % 2 == 0:
@@ -65,4 +65,4 @@ def print_tabuleiro():
             else:
                 print(var_global.CS_ESCURA + "\u001b[48;5;9m " + var_global.pecas_posi[coluna][linha-1] + " " + COR_RESETALL + var_global.CS_ESCURA, end = '')
         print()
-    print("\u001b[1m     01   02   03   04   05   06        07   08   09   10   11   12" + COR_RESETALL + "\n")
+    print(COR_NEGRITO + "     01   02   03   04   05   06        07   08   09   10   11   12" + COR_RESETALL + "\n")

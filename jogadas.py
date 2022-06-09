@@ -600,7 +600,7 @@ def jogada_opcoes(d1, d2):
         while True:
             # Tratamento de exceção quando usuário entra com opção inválida
             try:
-                print("\u001b[4m", end = "")
+                print(COR_SUBLINHADO, end = "")
                 if var_global.jog_1:
                     print(var_global.jogador_1, end = "")
                 else:
@@ -661,7 +661,7 @@ def jogada_opcoes(d1, d2):
             if var_global.dado_usado == 0:
                 # Tratamento de exceção quando usuário entra com opção inválida
                 try:
-                    print("\u001b[4m", end = "")
+                    print(COR_SUBLINHADO, end = "")
                     if var_global.jog_1:
                         print(var_global.jogador_1, end = "")
                     else:
@@ -709,7 +709,7 @@ def jogada_opcoes(d1, d2):
             
             # Opção para quando há somente uma peça capturada e irá usar D1 para movimentar
             elif var_global.dado_usado == 2:
-                print("\u001b[4m", end = "")
+                print(COR_SUBLINHADO, end = "")
                 if var_global.jog_1:
                     print(var_global.jogador_1, end = "")
                 else:
@@ -724,7 +724,7 @@ def jogada_opcoes(d1, d2):
             
             # Opção para quando há somente uma peça capturada e irá usar D2 para movimentar
             elif var_global.dado_usado == 1:
-                print("\u001b[4m", end = "")
+                print(COR_SUBLINHADO, end = "")
                 if var_global.jog_1:
                     print(var_global.jogador_1, end = "")
                 else:
