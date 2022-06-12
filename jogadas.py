@@ -61,24 +61,27 @@ def casa_cont(casa):
     return quant
 
 ###############################################
-def retirada_cond():
+def jogador_pode_retirar_pecas(jog_1, pc_clara, pc_escura, pecas_posi):
     """Teste da condição para retiradas de peças do jogo"""
 
-    if var_global.jog_1:
-        for casa in range(6):
-            for linha in range(5):
-                if var_global.pecas_posi[casa][linha] == var_global.PC_CLARA:
-                    var_global.pecas_casa_campo_clara += 1
-                elif var_global.pecas_posi[casa][linha].isnumeric():
-                    var_global.pecas_casa_campo_clara += var_global.pecas_posi[casa][linha]
+    peca_alvo = 0
+    casa_inicial = 0
+    if jog_1:
+        peca_alvo = pc_clara
+        casa_inicial = 0
     else:
-        for casa in range(6):
-            for linha in range(5):
-                if var_global.pecas_posi[23-casa][linha] == var_global.PC_ESCURA:
-                    var_global.pecas_casa_campo_escura += 1
-                elif var_global.pecas_posi[23-casa][linha].isnumeric():
-                    var_global.pecas_casa_campo_escura += var_global.pecas_posi[23-casa][linha]
-    return
+        peca_alvo = pc_escura
+        casa_inicial = 18
+
+    contagem_pecas = 0
+    for casa in range(6):
+        for linha in range(5):
+            if pecas_posi[casa_inicial + casa][linha] == peca_alvo:
+                contagem_pecas += 1
+            elif pecas_posi[casa_inicial + casa][linha].isnumeric():
+                contagem_pecas += pecas_posi[casa_inicial + casa][linha]
+
+    return contagem_pecas == 15
 
 ###############################################
 def jogada_validade(casa, dado):
