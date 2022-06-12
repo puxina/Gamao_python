@@ -213,9 +213,9 @@ def peca_movimento(casa, movimento, dado):
     # Movimento para sobrepor a peça do jogador
     elif movimento == 4:
         if var_global.jog_1:
-            quant_des = contar_pecas_na_casa(casa - dado, var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA))
+            quant_des = contar_pecas_na_casa(casa - dado, var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         else:
-            quant_des = contar_pecas_na_casa(casa + dado, var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA))
+            quant_des = contar_pecas_na_casa(casa + dado, var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         # Jogador 1 e peças na casa de origem e destino menos de 5
         if var_global.jog_1 and quant_ori < 5 and quant_des < 5:
             var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_posi[movimento_clara][quant_des] = var_global.pecas_posi[movimento_clara][quant_des], var_global.pecas_posi[posi_casa][quant_ori-1]
