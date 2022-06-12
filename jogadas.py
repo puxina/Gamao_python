@@ -3,7 +3,7 @@ Módulo que trata de tudo relacionado as jogadas de movimento das peças
 e suas retiradas
 
 Funções:
-    * casa_selecao():
+    * selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA):
 
     * retirada_cond():
 
@@ -25,18 +25,18 @@ from def_cores import *
 import tabuleiro
 
 ###############################################
-def casa_selecao():
+def selecionar_casa(jog_1, jog_2, pecas_posi, pc_clara, pc_escura, pc_nula):
     """Função que verifica se o valor escolhido para a casa da peça a ser movimentada está correto"""
     while True:
             casa = int(input("Selecione a casa correspondente a peça que você deseja mover: "))
             
             if casa == 0 or casa > 24:
                 print("\n" + COR_FUNDO_VERMELHO + "Valor inválido:" + COR_RESETALL + " Fora da faixa de 1 até 24. Repita a operação.\n")
-            elif var_global.pecas_posi[24-casa][0] == var_global.PC_NULA:
+            elif pecas_posi[24 - casa][0] == pc_nula:
                 print("\n" + COR_FUNDO_VERMELHO + "Jogada inválida:" + COR_RESETALL + " Você selecionou uma casa vazia. Tente novamente\n")
-            elif var_global.jog_1 and var_global.pecas_posi[24-casa][0] == var_global.PC_ESCURA:
+            elif jog_1 and pecas_posi[24 - casa][0] == pc_escura:
                 print("\n" + COR_FUNDO_VERMELHO + "Jogada inválida:" + COR_RESETALL + " Você selecionou a casa do adversário. Tente novamente\n")
-            elif var_global.jog_2 and var_global.pecas_posi[24-casa][0] == var_global.PC_CLARA:
+            elif jog_2 and pecas_posi[24 - casa][0] == pc_clara:
                 print("\n" + COR_FUNDO_VERMELHO + "Jogada inválida:" + COR_RESETALL + " Você selecionou a casa do adversário. Tente novamente\n")
             else:
                 return casa
@@ -259,7 +259,7 @@ def jogada_dados_diff(opcao, d1, d2):
     # Mover uma peça: usando D1 primeiro e depois D2
     if opcao == 1:
         # Validade das duas jogadas
-        casa = casa_selecao()
+        casa = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         movimento[0] = jogada_validade(casa, d1)
         if movimento[0] == 2:
             return False
@@ -285,7 +285,7 @@ def jogada_dados_diff(opcao, d1, d2):
     # Mover uma peça: usando D2 primeiro e depois D1
     elif opcao == 2:
         # Validade das duas jogadas
-        casa = casa_selecao()
+        casa = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         movimento[0] = jogada_validade(casa, d2)
         if movimento[0] == 2:
             return False
@@ -311,7 +311,7 @@ def jogada_dados_diff(opcao, d1, d2):
     # Mover duas peças: a primeira com D1 e a segunda com D2
     elif opcao == 3:
         # Peça 1
-        casa_1 = casa_selecao()
+        casa_1 = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         movimento[0] = jogada_validade(casa_1, d1)
         # Testa jogada inválida com D1 e retorna à função Opções caso verdade
         if movimento[0] == 2:
@@ -326,7 +326,7 @@ def jogada_dados_diff(opcao, d1, d2):
         while True:
             try:
                 # Peça 2
-                casa_2 = casa_selecao()
+                casa_2 = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
                 movimento[1] = jogada_validade(casa_2, d2)
                 if movimento[1] == 2:
                     return False
@@ -346,7 +346,7 @@ def jogada_dados_diff(opcao, d1, d2):
     # Mover duas peças: a primeira com D2 e a segunda com D1
     elif opcao == 4:
         # Peça 1
-        casa_1 = casa_selecao()
+        casa_1 = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         movimento[0] = jogada_validade(casa_1, d2)
         # Testa jogada inválida com D2 e retorna à função Opções caso verdade
         if movimento[0] == 2:
@@ -361,7 +361,7 @@ def jogada_dados_diff(opcao, d1, d2):
         while True:
             try:
                 # Peça 2
-                casa_2 = casa_selecao()
+                casa_2 = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
                 movimento[1] = jogada_validade(casa_2, d1)
                 if movimento[1] == 2:
                     return False
@@ -381,7 +381,7 @@ def jogada_dados_diff(opcao, d1, d2):
     # Mover uma peça: usando somente D1
     elif opcao == 5:
         # Validade da jogada única
-        casa = casa_selecao()
+        casa = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         movimento[0] = jogada_validade(casa, d1)
         if movimento[0] == 2:
             return False
@@ -394,7 +394,7 @@ def jogada_dados_diff(opcao, d1, d2):
     # Mover uma peça: usando somente D2
     elif opcao == 6:
         # Validade da jogada única
-        casa = casa_selecao()
+        casa = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         movimento[0] = jogada_validade(casa, d2)
         if movimento[0] == 2:
             return False
@@ -414,7 +414,7 @@ def jogada_dados_igual(opcao, dado):
     # Mover uma peça: usando 4*D1
     if opcao == 1:
         # Validade das quatro jogadas
-        casa_x[0] = casa_selecao()
+        casa_x[0] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         if var_global.jog_1:
             for cont in range(4):
                 movimento[cont] = jogada_validade(casa_x[0]-cont*dado, dado)
@@ -441,7 +441,7 @@ def jogada_dados_igual(opcao, dado):
     # Mover duas peças: usando 2*D1 e 2*D1
     elif opcao == 2:
         # Peça 1
-        casa_x[0] = casa_selecao()
+        casa_x[0] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         movimento[0] = jogada_validade(casa_x[0], 2*dado)
         # Testa jogada inválida com D1 e retorna à função Opções caso verdade
         if movimento[0] == 2:
@@ -451,7 +451,7 @@ def jogada_dados_igual(opcao, dado):
         while True:
             try:
                 # Peça 2
-                casa_x[1] = casa_selecao()
+                casa_x[1] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
                 movimento[1] = jogada_validade(casa_x[1], 2*dado)
                 if movimento[1] == 2:
                     return False
@@ -477,7 +477,7 @@ def jogada_dados_igual(opcao, dado):
     # Mover duas peças: usando 3*D1 e D1
     elif opcao == 3:
         # Peça 1
-        casa_x[0] = casa_selecao()
+        casa_x[0] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         movimento[0] = jogada_validade(casa_x[0], 3*dado)
         # Testa jogada inválida com D1 e retorna à função Opções caso verdade
         if movimento[0] == 2:
@@ -487,7 +487,7 @@ def jogada_dados_igual(opcao, dado):
         while True:
             try:
                 # Peça 2
-                casa_x[1] = casa_selecao()
+                casa_x[1] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
                 movimento[1] = jogada_validade(casa_x[1], dado)
                 if movimento[1] == 2:
                     return False
@@ -515,7 +515,7 @@ def jogada_dados_igual(opcao, dado):
         # Testa se a peça é a mesma. Se for, chama exceção
         # Peça 1, 2 e 3
         for cont in range(3):
-            casa_x[cont] = casa_selecao()
+            casa_x[cont] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
             while True:
                 try:
                     if cont == 0:
@@ -560,7 +560,7 @@ def jogada_dados_igual(opcao, dado):
         # Testa se a peça é a mesma. Se for, chama exceção
         # Peça 1, 2, 3 e 4
         for cont in range(4):
-            casa_x[cont] = casa_selecao()
+            casa_x[cont] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
             while True:
                 try:
                     movimento[cont] = jogada_validade(casa_x[cont], dado)
