@@ -42,21 +42,24 @@ def selecionar_casa(jog_1, jog_2, pecas_posi, pc_clara, pc_escura, pc_nula):
                 return casa
 
 ###############################################
-def casa_cont(casa):
+def contar_pecas_na_casa(casa, jog_1, jog_2, pecas_posi, pc_clara, pc_escura, pc_nula):
     """Função da contagem de peças na casa"""
+    #FIXME: Bug na condição "var_global.pecas_posi[casa_posi][cont].isnumeric()"
+    #ex.: [o, o, o, o, 2], p/ jogador 2, isso conta 2 peças escuras. Quando na verdade há
+    # 6 peças claras do jogador 1.
 
     quant = 0
-    casa_posi = 24-casa
+    casa_posi = 24 - casa
 
     for cont in range(5):
-        if var_global.jog_1 and var_global.pecas_posi[casa_posi][cont] == var_global.PC_CLARA:
+        if jog_1 and pecas_posi[casa_posi][cont] == pc_clara:
             quant += 1
-        elif var_global.jog_2 and var_global.pecas_posi[casa_posi][cont] == var_global.PC_ESCURA:
+        elif jog_2 and pecas_posi[casa_posi][cont] == pc_escura:
             quant += 1
-        elif var_global.pecas_posi[casa_posi][cont] == var_global.PC_NULA:
+        elif pecas_posi[casa_posi][cont] == pc_nula:
             break
-        elif var_global.pecas_posi[casa_posi][cont].isnumeric():
-            quant += var_global.pecas_posi[casa_posi][cont]
+        elif pecas_posi[casa_posi][cont].isnumeric():
+            quant += pecas_posi[casa_posi][cont]
 
     return quant
 
@@ -150,7 +153,7 @@ def peca_movimento(casa, movimento, dado):
     posi_casa = 24-casa
     movimento_clara = 24-casa+dado
     movimento_escura = 24-casa-dado
-    quant_ori = casa_cont(casa)
+    quant_ori = contar_pecas_na_casa(casa, var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
 
     # Movimento para casa vazia
     if movimento == 1:
@@ -210,9 +213,9 @@ def peca_movimento(casa, movimento, dado):
     # Movimento para sobrepor a peça do jogador
     elif movimento == 4:
         if var_global.jog_1:
-            quant_des = casa_cont(casa-dado)
+            quant_des = contar_pecas_na_casa(casa - dado, var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA))
         else:
-            quant_des = casa_cont(casa+dado)
+            quant_des = contar_pecas_na_casa(casa + dado, var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA))
         # Jogador 1 e peças na casa de origem e destino menos de 5
         if var_global.jog_1 and quant_ori < 5 and quant_des < 5:
             var_global.pecas_posi[posi_casa][quant_ori-1], var_global.pecas_posi[movimento_clara][quant_des] = var_global.pecas_posi[movimento_clara][quant_des], var_global.pecas_posi[posi_casa][quant_ori-1]
