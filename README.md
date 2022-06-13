@@ -11,3 +11,7 @@ Inicie jogo com `python gamao.py`
 - Não ter efeito colateral/estado global
     - Torna clara relação entrada -> saída
     - Facilita testabilidade
+
+# Bugs
+- Função 'peca_capturada' em 'retorno.py'
+    - Não funciona para condição casa_cond == 1, l 113-114
