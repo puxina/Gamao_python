@@ -58,11 +58,6 @@ pecas_sobre = [[PC_NULA]] * 24
 
 pecas_sobre_quant = [1] * 24
 
-# Variáveis da quantidade de peças na casa campo do jogador
-pecas_casa_campo_clara = 0
-
-pecas_casa_campo_escura = 0
-
 # Variáveis dos valores de dados
 dado_1 = 1
 dado_2 = 1
