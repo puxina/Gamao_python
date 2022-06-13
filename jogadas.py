@@ -5,9 +5,11 @@ e suas retiradas
 Funções:
     * selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA):
 
-    * retirada_cond():
+    * contar_pecas_na_casa(casa, jog_1, jog_2, pecas_posi, pc_clara, pc_escura, pc_nula):
 
-    * jogada_validade(casa, dado):
+    * jogador_pode_retirar_pecas(jog_1, pc_clara, pc_escura, pecas_posi)
+
+    * definir_tipo_de_jogada(casa, dado, jog_1, pc_clara, pc_escura, pc_nula, pecas_posi):
 
     * peca_movimento(casa, movimento, d1, d2):
 
@@ -87,63 +89,49 @@ def jogador_pode_retirar_pecas(jog_1, pc_clara, pc_escura, pecas_posi):
     return contagem_pecas == 15
 
 ###############################################
-def jogada_validade(casa, dado):
+def definir_tipo_de_jogada(casa, dado, jog_1, pc_clara, pc_escura, pc_nula, pecas_posi):
     """Função para verificar se a movimentação da peça do jogador é válida \n
-       Duas ou mais peças do adversário: casa fechada\n
-       Uma peça do adversário: peça será capturada\n
-       Casa sem peças ou com peças do próprio jogador: casa livre"""
+       Duas ou mais peças do adversário: casa fechada (inválida = 0)\n
+       Uma peça do adversário: peça será capturada (válida = 1)\n
+       Casa sem peças ou com peças do próprio jogador: casa livre (válida = 1)"""
 
-    movimento_clara = 24-casa+dado
-    movimento_escura = 24-casa-dado
+    movimento = 0
+    peca_jogador = -1
+    peca_oponente = -1
+    if jog_1:
+        movimento = 24 - casa + dado
+        peca_jogador = pc_clara
+        peca_oponente = pc_escura
+    else:
+        movimento = 24 - casa - dado
+        peca_jogador = pc_escura
+        peca_oponente = pc_clara
 
-    # Movimento de retirada se casa campo com todas as peças
-    if var_global.jog_1 and movimento_clara > 23:
-        if var_global.pecas_casa_campo_clara == 15 and var_global.pecas_capturadas_claras[0] == var_global.PC_NULA:
-            return 5
-        else:
-            print("\nCondição para as retiradas de peças do jogo não atingida. Tente novamente\n")
-            return 2
-    elif var_global.jog_2 and movimento_escura < 0:
-        if var_global.pecas_casa_campo_escura == 15 and var_global.pecas_capturadas_escuras[0] == var_global.PC_NULA:
+    # Movimento de retirada se casa campo estiver com todas as peças
+    if movimento > 23 or movimento < 0:
+        if jogador_pode_retirar_pecas(jog_1, pc_clara, pc_escura, pecas_posi):
             return 5
         else:
             print("\nCondição para as retiradas de peças do jogo não atingida. Tente novamente\n")
             return 2
     
     # Movimento válido se casa vazia
-    elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][0] == var_global.PC_NULA:
-        return 1
-    elif var_global.jog_2 and var_global.pecas_posi[movimento_escura][0] == var_global.PC_NULA:
+    elif pecas_posi[movimento][0] == pc_nula:
         return 1
     
     # Movimento inválido se casa bloqueada
-    elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][1] == var_global.PC_ESCURA:
+    elif pecas_posi[movimento][1] == peca_oponente:
         print("\n" + COR_FUNDO_VERMELHO + "Jogada inválida:" + COR_RESETALL + " A opção escolhida leva sua peça\n" +
                 "para uma casa bloqueada. Tente novamente\n")
-        tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
-
-        return 2
-    elif var_global.jog_2 and var_global.pecas_posi[movimento_escura][1] == var_global.PC_CLARA:
-        print("\n" + COR_FUNDO_VERMELHO + "Jogada inválida:" + COR_RESETALL + " A opção escolhida leva sua peça\n" +
-                "para uma casa bloqueada. Tente novamente\n")
-        tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
-
         return 2
     
     # Movimento de captura
-    elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][1] == var_global.PC_NULA \
-         and var_global.pecas_posi[movimento_clara][0] == var_global.PC_ESCURA:
-        print("\nA opção escolhida leva sua peça a capturar a peça do adversário\n")
-        return 3
-    elif var_global.jog_2 and var_global.pecas_posi[movimento_escura][1] == var_global.PC_NULA \
-         and var_global.pecas_posi[movimento_escura][0] == var_global.PC_CLARA:
+    elif pecas_posi[movimento][1] == pc_nula and pecas_posi[movimento][0] == peca_oponente:
         print("\nA opção escolhida leva sua peça a capturar a peça do adversário\n")
         return 3
     
     # Movimento válido de sobreposição se peças do jogador
-    elif var_global.jog_1 and var_global.pecas_posi[movimento_clara][0] == var_global.PC_CLARA:
-        return 4
-    elif var_global.jog_2 and var_global.pecas_posi[movimento_escura][0] == var_global.PC_ESCURA:
+    elif pecas_posi[movimento][0] == peca_jogador:
         return 4
 
 ###############################################
@@ -263,16 +251,18 @@ def jogada_dados_diff(opcao, d1, d2):
     if opcao == 1:
         # Validade das duas jogadas
         casa = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-        movimento[0] = jogada_validade(casa, d1)
+        movimento[0] = definir_tipo_de_jogada(casa, d1, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
         if movimento[0] == 2:
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
             return False
         else:
             if var_global.jog_1:
-                movimento[1] = jogada_validade(casa-d1, d2)
+                movimento[1] = definir_tipo_de_jogada(casa-d1, d2, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
             else:
-                movimento[1] = jogada_validade(casa+d1, d2)
+                movimento[1] = definir_tipo_de_jogada(casa+d1, d2, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
         # Se um dos dois movimentos for inválido
         if movimento[1] == 2:
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
             return False
         # Se não há movimentos inválidos
         else:
@@ -289,16 +279,18 @@ def jogada_dados_diff(opcao, d1, d2):
     elif opcao == 2:
         # Validade das duas jogadas
         casa = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-        movimento[0] = jogada_validade(casa, d2)
+        movimento[0] = definir_tipo_de_jogada(casa, d2, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
         if movimento[0] == 2:
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
             return False
         else:
             if var_global.jog_1:
-                movimento[1] = jogada_validade(casa-d2, d1)
+                movimento[1] = definir_tipo_de_jogada(casa-d2, d1, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
             else:
-                movimento[1] = jogada_validade(casa+d2, d1)
+                movimento[1] = definir_tipo_de_jogada(casa+d2, d1, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
         # Se um dos dois movimentos for inválido
         if movimento[1] == 2:
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
             return False
         # Se não há movimentos inválidos
         else:
@@ -315,9 +307,10 @@ def jogada_dados_diff(opcao, d1, d2):
     elif opcao == 3:
         # Peça 1
         casa_1 = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-        movimento[0] = jogada_validade(casa_1, d1)
+        movimento[0] = definir_tipo_de_jogada(casa_1, d1, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
         # Testa jogada inválida com D1 e retorna à função Opções caso verdade
         if movimento[0] == 2:
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
             return False
         else:
             peca_movimento(casa_1, movimento[0], d1)
@@ -330,8 +323,9 @@ def jogada_dados_diff(opcao, d1, d2):
             try:
                 # Peça 2
                 casa_2 = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-                movimento[1] = jogada_validade(casa_2, d2)
+                movimento[1] = definir_tipo_de_jogada(casa_2, d2, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
                 if movimento[1] == 2:
+                    tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
                     return False
                 elif var_global.jog_1:
                     if (casa_2 + d1) == casa_1:
@@ -350,9 +344,10 @@ def jogada_dados_diff(opcao, d1, d2):
     elif opcao == 4:
         # Peça 1
         casa_1 = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-        movimento[0] = jogada_validade(casa_1, d2)
+        movimento[0] = definir_tipo_de_jogada(casa_1, d2, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
         # Testa jogada inválida com D2 e retorna à função Opções caso verdade
         if movimento[0] == 2:
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
             return False
         else:
             peca_movimento(casa_1, movimento[0], d2)
@@ -365,8 +360,9 @@ def jogada_dados_diff(opcao, d1, d2):
             try:
                 # Peça 2
                 casa_2 = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-                movimento[1] = jogada_validade(casa_2, d1)
+                movimento[1] = definir_tipo_de_jogada(casa_2, d1, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
                 if movimento[1] == 2:
+                    tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
                     return False
                 elif var_global.jog_1:
                     if (casa_2 + d2) == casa_1:
@@ -385,8 +381,9 @@ def jogada_dados_diff(opcao, d1, d2):
     elif opcao == 5:
         # Validade da jogada única
         casa = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-        movimento[0] = jogada_validade(casa, d1)
+        movimento[0] = definir_tipo_de_jogada(casa, d1, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
         if movimento[0] == 2:
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
             return False
         else:
             peca_movimento(casa, movimento[0], d1)
@@ -398,8 +395,9 @@ def jogada_dados_diff(opcao, d1, d2):
     elif opcao == 6:
         # Validade da jogada única
         casa = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-        movimento[0] = jogada_validade(casa, d2)
+        movimento[0] = definir_tipo_de_jogada(casa, d2, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
         if movimento[0] == 2:
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
             return False
         else:
             peca_movimento(casa, movimento[0], d2)
@@ -420,13 +418,15 @@ def jogada_dados_igual(opcao, dado):
         casa_x[0] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
         if var_global.jog_1:
             for cont in range(4):
-                movimento[cont] = jogada_validade(casa_x[0]-cont*dado, dado)
+                movimento[cont] = definir_tipo_de_jogada(casa_x[0]-cont*dado, dado, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
                 if movimento[cont] == 2:
+                    tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
                     return False
         else:
             for cont in range(4):
-                movimento[cont] = jogada_validade(casa_x[0]+cont*dado, dado)
+                movimento[cont] = definir_tipo_de_jogada(casa_x[0]+cont*dado, dado, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
                 if movimento[cont] == 2:
+                    tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
                     return False
         
         # Se não há movimentos inválidos
@@ -445,9 +445,10 @@ def jogada_dados_igual(opcao, dado):
     elif opcao == 2:
         # Peça 1
         casa_x[0] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-        movimento[0] = jogada_validade(casa_x[0], 2*dado)
+        movimento[0] = definir_tipo_de_jogada(casa_x[0], 2*dado, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
         # Testa jogada inválida com D1 e retorna à função Opções caso verdade
         if movimento[0] == 2:
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
             return False
 
         # Testa se a peça é a mesma. Se for, chama exceção
@@ -455,8 +456,9 @@ def jogada_dados_igual(opcao, dado):
             try:
                 # Peça 2
                 casa_x[1] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-                movimento[1] = jogada_validade(casa_x[1], 2*dado)
+                movimento[1] = definir_tipo_de_jogada(casa_x[1], 2*dado, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
                 if movimento[1] == 2:
+                    tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
                     return False
                 elif var_global.jog_1:
                     if (casa_x[1] + 2*dado) == casa_x[0]:
@@ -481,9 +483,10 @@ def jogada_dados_igual(opcao, dado):
     elif opcao == 3:
         # Peça 1
         casa_x[0] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-        movimento[0] = jogada_validade(casa_x[0], 3*dado)
+        movimento[0] = definir_tipo_de_jogada(casa_x[0], 3*dado, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
         # Testa jogada inválida com D1 e retorna à função Opções caso verdade
         if movimento[0] == 2:
+            tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
             return False
 
         # Testa se a peça é a mesma. Se for, chama exceção
@@ -491,8 +494,9 @@ def jogada_dados_igual(opcao, dado):
             try:
                 # Peça 2
                 casa_x[1] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
-                movimento[1] = jogada_validade(casa_x[1], dado)
+                movimento[1] = definir_tipo_de_jogada(casa_x[1], dado, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
                 if movimento[1] == 2:
+                    tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
                     return False
                 elif var_global.jog_1:
                     if (casa_x[1] + 2*dado) == casa_x[0]:
@@ -522,11 +526,12 @@ def jogada_dados_igual(opcao, dado):
             while True:
                 try:
                     if cont == 0:
-                        movimento[cont] = jogada_validade(casa_x[cont], 2*dado)
+                        movimento[cont] = definir_tipo_de_jogada(casa_x[cont], 2*dado, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
                     else:
-                        movimento[cont] = jogada_validade(casa_x[cont], dado)
+                        movimento[cont] = definir_tipo_de_jogada(casa_x[cont], dado, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
                     
                     if movimento[cont] == 2:
+                        tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
                         return False
                     elif var_global.jog_1 and cont == 1:
                         if (casa_x[cont] + dado) == casa_x[cont-1]:
@@ -566,9 +571,10 @@ def jogada_dados_igual(opcao, dado):
             casa_x[cont] = selecionar_casa(var_global.jog_1, var_global.jog_2, var_global.pecas_posi, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA)
             while True:
                 try:
-                    movimento[cont] = jogada_validade(casa_x[cont], dado)
+                    movimento[cont] = definir_tipo_de_jogada(casa_x[cont], dado, var_global.jog_1, var_global.PC_CLARA, var_global.PC_ESCURA, var_global.PC_NULA, var_global.pecas_posi)
                     
                     if movimento[cont] == 2:
+                        tabuleiro.print_tabuleiro(var_global.pecas_posi, var_global.pecas_retiradas_escuras, var_global.pecas_retiradas_claras, var_global.pecas_capturadas_escuras, var_global.pecas_capturadas_claras, var_global.CS_CLARA, var_global.CS_ESCURA, var_global.CS_MEIO)
                         return False
                     elif var_global.jog_1 and cont == 1:
                         if (casa_x[cont] + dado) == casa_x[cont-1]:
@@ -613,7 +619,6 @@ def jogada_dados_igual(opcao, dado):
 
         return True
         
-
 ###############################################
 def jogada_opcoes(d1, d2):
     """Função para indicar as várias opções disponíveis do uso dos dados ao jogador"""
